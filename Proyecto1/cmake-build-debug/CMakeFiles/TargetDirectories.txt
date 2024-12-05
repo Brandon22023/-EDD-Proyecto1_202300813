@@ -1,0 +1,3 @@
+C:/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/cmake-build-debug/CMakeFiles/Proyecto1.dir
+C:/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
