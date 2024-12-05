@@ -24,7 +24,9 @@ class Administrador {
 private:
     int opcion;
 public:
-
+    explicit Administrador(int opcion)
+        : opcion(opcion) {
+    }
 
     void Menu2() {
         do {
