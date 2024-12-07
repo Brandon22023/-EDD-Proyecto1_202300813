@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+#include <limits>
+
 using namespace std;
 
 class menu_sesion{
@@ -20,69 +23,117 @@ public:
 
 };
 
-class Administrador {
+class crear_usuario{
 private:
-    int opcion;
+    string opc;
+
 public:
+    void Menu_crear_usuario() {
+        string nombre, contrasena, departamento, empresa;
+        cout << "============================ Crear Usuario ============================ " << endl;
+        cout << "Ingrese el nombre del usuario: ";
+        cin >> nombre;
 
+        cout << "Ingrese la contraseña: ";
+        cin >> contrasena;
 
-    void Menu2() {
+        cout << "Ingrese el departamento: ";
+        cin >> departamento;
+
+        cout << "Ingrese la empresa: ";
+        cin >> empresa;
+
+        cout << "Usuario creado exitosamente con los datos: " << endl;
+        cout << "Nombre: " << nombre << ", Departamento: " << departamento << ", Empresa: " << empresa << endl;
+    }
+};
+
+class Menu_Administrador{
+
+public:
+    void Menu() {
+        int opc= 0;
+
         do {
-            // Menú principal
-            cout << "\n=== Menú Principal ===" << endl;
-            cout << "1. Contar números del 1 al 10" << endl;
-            cout << "2. Mostrar un mensaje repetidamente" << endl;
-            cout << "3. Salir" << endl;
-            cout << "Ingrese una opción: ";
-            cin >> opcion;
+            cout << "============================ Menu Administrador ============================" << endl;
+            cout << "|| 1. Registrar Usuario" << endl;
+            cout << "|| 2. Reporte de Matriz Dispersa" << endl;
+            cout << "|| 3. Reporte Activos Disponibles de un Departamento" << endl;
+            cout << "|| 4. Reporte Activos Disponibles de una Empresa" << endl;
+            cout << "|| 5. Reporte Transacciones" << endl;
+            cout << "|| 6. Reporte Activos de un Usuario" << endl;
+            cout << "|| 7. Activos rentados por un Usuario" << endl;
+            cout << "|| 8. Ordenar Transacciones" << endl;
+            cout << "|| 9. Salir" << endl;
+            cout << "** Ingrese una opcion" << endl;
+            cin >> opc;
+            cout << "la opcion seleccionada fue " << opc << "" << endl;
+            cout << " " << endl;
 
-            switch (opcion) {
-                case 1: {
-                    // Bucle while para contar del 1 al 10
-                    int contador = 1;
-                    while (contador <= 10) {
-                        cout << contador << " ";
-                        contador++;
-                    }
-                    cout << "\nHecho." << endl;
+            switch(opc) {
+                case 1:{
+                    cout << "------------Has seleccionado la opcion de Registrar Usuario------------" << endl;
+                    crear_usuario Creador_usuario1;
+                    Creador_usuario1.Menu_crear_usuario();
                     break;
                 }
-                case 2: {
-                    // Pedir al usuario un mensaje y repetirlo
-                    string mensaje;
-                    int repeticiones;
-                    cout << "Ingrese un mensaje: ";
-                    cin.ignore(); // Limpiar el buffer antes de getline
-                    getline(cin, mensaje);
-                    cout << "¿Cuántas veces desea repetirlo? ";
-                    cin >> repeticiones;
-
-                    int i = 0;
-                    while (i < repeticiones) {
-                        cout << mensaje << endl;
-                        i++;
-                    }
+                case 2:{
+                    cout << "opcion 2" << endl;
                     break;
                 }
-                case 3:
-                    cout << "Saliendo del programa. ¡Adiós!" << endl;
-                break;
+
+                case 3:{
+                    cout << "opcion 3" << endl;
+                    break;
+                }
+
+                case 4:{
+                    cout << "opcion 4" << endl;
+                    break;
+                }
+
+                case 5:{
+                    cout << "opcion 5" << endl;
+                    break;
+                }
+
+                case 6:{
+                    cout << "opcion 6" << endl;
+                    break;
+                }
+
+                case 7:{
+                    cout << "opcion 7" << endl;
+                    break;
+                }
+
+                case 8:{
+                    cout << "opcion 8" << endl;
+                    break;
+                }
+
+                case 9:{
+                    cout << "opcion 9" << endl;
+                    break;
+                }
+
                 default:
-                    cout << "Opción inválida. Por favor intente de nuevo." << endl;
+                    cout << "Opción no válida, intente de nuevo." << endl;
             }
-        } while (opcion != 3);
+
+        }while (opc !=9);
 
     }
 
+
 };
 int main() {
-    menu_sesion menu;
-    menu.Menu();
+    //menu_sesion menu;
+    //menu.Menu();
 
-    Administrador admin;
-    admin.Menu2();
-
-    cout << "probando cosas" << endl;
+    Menu_Administrador menu_administrador;
+    menu_administrador.Menu();
+    //cout << "probando cosas" << endl;
 
     return 0;
 }
