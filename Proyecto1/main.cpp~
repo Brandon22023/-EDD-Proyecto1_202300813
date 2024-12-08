@@ -250,7 +250,7 @@ public:
                         }else {
                             cout << "Opcion no valida" << endl;
                         }
-                    }while(opcion2 != 1);
+                    }while(opcion2 != 2);
 
                     break;
                 }
