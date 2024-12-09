@@ -4,4 +4,7 @@ project(Proyecto1)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(Proyecto1 main.cpp
-        "Matriz Disperza/NodosMatrizDisperza.h")
+        "Matriz Disperza/Nodo.h"
+        Nodo.cpp
+        "Matriz Disperza/Matriz_Disperza.h"
+        Matriz_Disperza.cpp)
