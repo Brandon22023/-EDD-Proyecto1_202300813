@@ -5,7 +5,7 @@
 #ifndef Matriz_Disperza_H
 #define Matriz_Disperza_H
 
-#include "Matriz Disperza/Nodo.h"
+#include "Nodo.h"
 
 class Matriz_Disperza {
 
@@ -23,20 +23,18 @@ public:
     //set
     void setcabeceraHo(Nodo *cabeceraHo);
     void setcabecerave(Nodo *cabecerave);
-
+    //------------------------------------------------------------------------------------------
     //otros metodos
     bool estavacia();
 
     Nodo *cabecerahorizontal(int valor);
     Nodo *cabececarvertical(int valor);
 
-    void insertarvalor(int valor);
+    Nodo *insertarCabeceraHorizontal(int valor);
+    Nodo *insertarCabeceraVertical(int valor);
 
-
-
-
-
-
+    void insertarvalor(int valor, int cabecera_horizontal, int cabecera_vertical);
+    void insertarALfinal(int valor, Nodo *cabeceraHorizontal, Nodo *cabeceraVertical);
 };
 
 

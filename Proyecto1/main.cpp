@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <limits>
+#include "Matriz Disperza/Matriz_Disperza.h"
 
 using namespace std;
 
@@ -275,8 +275,13 @@ public:
 
 
 int main() {
-    Menus t_menus;
-    t_menus.Menu_sesion();
+    //Menus t_menus;
+    //t_menus.Menu_sesion();
+
+    Matriz_Disperza *matriz = new Matriz_Disperza();
+    matriz->insertarvalor(5,0,0);
+
+
 
 
     //cout << "probando cosas" << endl;
