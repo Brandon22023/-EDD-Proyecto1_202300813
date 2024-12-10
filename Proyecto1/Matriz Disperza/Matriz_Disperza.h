@@ -28,7 +28,8 @@ public:
     bool estavacia();
 
     Nodo *cabecerahorizontal(int valor);
-    Nodo *cabececarvertical(int valor);
+    Nodo *cabeceravertical(int valor);
+
 
     Nodo *insertarCabeceraHorizontal(int valor);
     Nodo *insertarCabeceraVertical(int valor);

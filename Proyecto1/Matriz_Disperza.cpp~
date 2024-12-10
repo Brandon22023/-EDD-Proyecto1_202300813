@@ -114,7 +114,7 @@ Nodo *Matriz_Disperza::insertarCabeceraHorizontal(int valor) {
     Nodo *nuevacabecera = new Nodo(valor);
 
     if (this->getcabeceraHo() == nullptr) {
-        this->setcabeceraHo(nuevacabecera);
+        setcabeceraHo(nuevacabecera);
         return nuevacabecera;
     }
 
