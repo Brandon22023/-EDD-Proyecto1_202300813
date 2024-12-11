@@ -35,7 +35,18 @@ public:
     Nodo *insertarCabeceraVertical(int valor);
 
     void insertarvalor(int valor, int cabecera_horizontal, int cabecera_vertical);
-    void insertarALfinal(int valor, Nodo *cabeceraHorizontal, Nodo *cabeceraVertical);
+    void insertarALfinal(Nodo *valor, Nodo *cabeceraHorizontal, Nodo *cabeceraVertical);
+    void insertarAlFinalHorizontal(Nodo *valor, Nodo *cabeceraHorizontal);
+    void insertarAlFinalVertical(Nodo *valor, Nodo *cabeceraVertical);
+    void insertarAlMedioVertical(Nodo *valor, Nodo *VERTICAL);
+    void insertarAlMedioHorizontal(Nodo *valor, Nodo *HORIZONTAL);
+
+    Nodo *enCabeceraHorizontal(Nodo *NODE);
+    Nodo *enCabeceraVertical(Nodo *NODE);
+
+    bool masabajo(Nodo *cabeV, int cabecera_horizontal);
+    bool masderecha(Nodo *cabeH, int cabecera_vertical);
+
 };
 
 

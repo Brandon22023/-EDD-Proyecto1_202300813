@@ -271,22 +271,15 @@ public:
     }
 };
 
-
-
-
 int main() {
     //Menus t_menus;
     //t_menus.Menu_sesion();
-
     Matriz_Disperza *matriz = new Matriz_Disperza();
     matriz->insertarvalor(5,0,0);
     matriz->insertarvalor(8, 1, 0);
-
-
-
-
+    matriz->insertarvalor(10, 2, 1);
+    matriz->insertarvalor(15, 1, 1);
     //cout << "probando cosas" << endl;
-
     return 0;
 }
 

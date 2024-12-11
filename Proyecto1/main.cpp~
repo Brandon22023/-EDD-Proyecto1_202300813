@@ -280,7 +280,9 @@ int main() {
 
     Matriz_Disperza *matriz = new Matriz_Disperza();
     matriz->insertarvalor(5,0,0);
-    matriz->insertarvalor()
+    matriz->insertarvalor(8, 1, 0);
+    matriz->insertarvalor(10, 2, 1);
+    matriz->insertarvalor(15, 1, 1);
 
 
 
