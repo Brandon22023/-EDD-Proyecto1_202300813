@@ -7,4 +7,5 @@ add_executable(Proyecto1 main.cpp
         "Matriz Disperza/Nodo.h"
         Nodo.cpp
         "Matriz Disperza/Matriz_Disperza.h"
-        Matriz_Disperza.cpp)
+        Matriz_Disperza.cpp
+)

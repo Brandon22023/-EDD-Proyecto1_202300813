@@ -2,10 +2,14 @@
 #include <string>
 #include "Matriz Disperza/Matriz_Disperza.h"
 
+
 using namespace std;
 
 
 class Menus{
+
+
+
 public:
     void Menu_sesion() {
         int opc=0;
@@ -271,14 +275,19 @@ public:
     }
 };
 
+
+
 int main() {
     //Menus t_menus;
     //t_menus.Menu_sesion();
     Matriz_Disperza *matriz = new Matriz_Disperza();
     matriz->insertarvalor(5,0,0);
-    matriz->insertarvalor(8, 1, 0);
-    matriz->insertarvalor(10, 2, 1);
-    matriz->insertarvalor(15, 1, 1);
+    //matriz->insertarvalor(8, 1, 0);
+    //matriz->insertarvalor(10, 2, 1);
+    //matriz->insertarvalor(15, 1, 1);
+    matriz->graficarMatrizDisperza();
+
+
     //cout << "probando cosas" << endl;
     return 0;
 }

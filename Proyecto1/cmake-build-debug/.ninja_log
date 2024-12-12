@@ -1,17 +1,7 @@
 # ninja log v6
-19	1022	7553422955299400	CMakeFiles/Proyecto1.dir/main.cpp.obj	5e803de2dee26a7e
-1022	1230	7553422965321037	Proyecto1.exe	5d6d7c46d996a56c
+4	595	7556549682717646	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
+4	584	7556538600577075	CMakeFiles/Proyecto1.dir/main.cpp.obj	5e803de2dee26a7e
+595	704	7556549688621397	Proyecto1.exe	11d3ee8f71cf77c9
 36	334	7555347594026817	CMakeFiles/Proyecto1.dir/Nodo.cpp.obj	8d330b3d8fe600eb
-9	139	7555349648568819	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
-5	614	7555349648520891	CMakeFiles/Proyecto1.dir/main.cpp.obj	5e803de2dee26a7e
-614	774	7555349654619073	Proyecto1.exe	11d3ee8f71cf77c9
-52	331	7555579971646243	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
-41	973	7555579971546792	CMakeFiles/Proyecto1.dir/main.cpp.obj	5e803de2dee26a7e
-974	1200	7555579980873664	Proyecto1.exe	11d3ee8f71cf77c9
-88	510	7556426321049014	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
-69	1249	7556426320875993	CMakeFiles/Proyecto1.dir/main.cpp.obj	5e803de2dee26a7e
-1250	1570	7556426332666671	Proyecto1.exe	11d3ee8f71cf77c9
-20	250	7556429111951595	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
-251	647	7556429114263814	Proyecto1.exe	11d3ee8f71cf77c9
-9	209	7556430642225407	CMakeFiles/Proyecto1.dir/Matriz_Disperza.cpp.obj	e7970a72d515b84a
-211	412	7556430644241570	Proyecto1.exe	11d3ee8f71cf77c9
+21	801	7556515841891163	CMakeFiles/Proyecto1.dir/graficar.cpp.obj	f97ab2975587a347
+2	810	7556978362529573	build.ninja	8dd4c6672cbee86c

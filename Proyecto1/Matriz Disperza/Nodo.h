@@ -4,13 +4,15 @@
 
 #ifndef NODO_H
 #define NODO_H
-
+#include <string>
+using namespace std;
 
 
 // Nodo con 6 apuntadores en una estructura dispersa
 class Nodo {
 private:
-    int valor;           // Valor del nodo
+    //int valor;           // Valor del nodo
+    string valor;    // Valor del nodo
     Nodo* siguiente;     // Apuntador al nodo siguiente
     Nodo* previo;        // Apuntador al nodo previo
     Nodo* arriba;        // Apuntador al nodo arriba
@@ -21,10 +23,10 @@ private:
 public:
     // Constructor
 
-    explicit Nodo(int valor);
+    explicit Nodo(string valor);
 
     // Get
-    int getValor();
+    string getValor();
     Nodo* getSiguiente();
     Nodo* getPrevio();
     Nodo* getArriba();
@@ -33,7 +35,7 @@ public:
     Nodo* getAdelante();
 
     // Set
-    void setValor(int valor);
+    void setValor(string valor);
     void setSiguiente(Nodo* siguiente);
     void setPrevio(Nodo* previo);
     void setArriba(Nodo* arriba);

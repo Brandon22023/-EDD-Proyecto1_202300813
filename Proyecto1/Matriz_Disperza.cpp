@@ -1,7 +1,12 @@
 //
 // Created by Marro on 09/12/2024.
 //
+#include <fstream>
+#include <iostream>
+#include <string>
 #include "Matriz Disperza/Matriz_Disperza.h"
+
+using namespace std;
 
 #include <float.h>
 
@@ -300,6 +305,99 @@ bool Matriz_Disperza::masabajo(Nodo *cabeV, int cabecera_vertical) {
 bool Matriz_Disperza::estavacia() {
     return this->cabeceraHo == nullptr;
 }
+
+
+
+
+
+
+
+
+void Matriz_Disperza::graficarMatrizDisperza() {
+    const string nombreArchivo = "Reporte_matriz_disperza.dot";
+    ofstream archivo(nombreArchivo);
+
+    if (!archivo.is_open()) {
+        cerr << "Error al abrir el archivo para graficar." << endl;
+        return;
+    }
+
+    archivo << "digraph G {\n";
+    archivo << "    rankdir=LR;\n"; // Dirección de izquierda a derecha
+    archivo << "    node [shape=box, fontcolor=black];\n"; // Definir el estilo de los nodos en blanco y negro
+
+    // Subgráfico para las cabeceras horizontales (departamentos)
+    archivo << "    { rank=same;\n"; // Asegura que todas las cabeceras horizontales estén en el mismo nivel
+    Nodo* actualCabeceraHo = cabeceraHo;
+    while (actualCabeceraHo != nullptr) {
+        archivo << "    \"CabH_" << actualCabeceraHo->getValor()
+                << "\" [label=\"Dept: " << actualCabeceraHo->getValor() << "\"];\n";
+        actualCabeceraHo = actualCabeceraHo->getSiguiente();
+    }
+    archivo << "    }\n\n";
+
+    // Subgráfico para las cabeceras verticales (empresas)
+    Nodo* actualCabeceraVe = cabecerave;
+    while (actualCabeceraVe != nullptr) {
+        archivo << "    \"CabV_" << actualCabeceraVe->getValor()
+                << "\" [label=\"Emp: " << actualCabeceraVe->getValor() << "\"];\n";
+        actualCabeceraVe = actualCabeceraVe->getAbajo();
+    }
+
+    // Recorrido de la matriz y generación de nodos de usuario y conexiones
+    actualCabeceraHo = cabeceraHo;
+    while (actualCabeceraHo != nullptr) {
+        Nodo* actual = actualCabeceraHo->getAbajo(); // Primer nodo en la columna actual
+
+        while (actual != nullptr) {
+            // Crear nodo de usuario
+            archivo << "    \"Nodo_" << actual->getValor()
+                    << "\" [label=\"Usuario: " << actual->getValor() << "\"];\n";
+
+            // Conectar nodo con cabecera horizontal
+            archivo << "    \"CabH_" << actualCabeceraHo->getValor() << "\" -> "
+                    << "\"Nodo_" << actual->getValor() << "\" [dir=none];\n";
+
+            // Conectar nodo con cabecera vertical
+            Nodo* cabeceraVertical = cabecerave;
+            while (cabeceraVertical != nullptr) {
+                // Si el nodo está en la columna correspondiente de esta cabecera vertical
+                if (actual->getValor() == cabeceraVertical->getValor()) {
+                    archivo << "    \"CabV_" << cabeceraVertical->getValor() << "\" -> "
+                            << "\"Nodo_" << actual->getValor() << "\" [dir=none];\n";
+                    break; // Ya que la cabecera vertical correspondiente fue encontrada
+                }
+                cabeceraVertical = cabeceraVertical->getAbajo();
+            }
+
+            // Conexión con otros nodos (hacia la derecha)
+            if (actual->getSiguiente() != nullptr) {
+                archivo << "    \"Nodo_" << actual->getValor()
+                        << "\" -> \"Nodo_" << actual->getSiguiente()->getValor() << "\" [dir=both];\n";
+            }
+
+            // Conexión con otros nodos (hacia abajo)
+            if (actual->getAbajo() != nullptr) {
+                archivo << "    \"Nodo_" << actual->getValor()
+                        << "\" -> \"Nodo_" << actual->getAbajo()->getValor() << "\" [dir=both];\n";
+            }
+
+            actual = actual->getAbajo(); // Avanza al siguiente nodo en la columna
+        }
+
+        actualCabeceraHo = actualCabeceraHo->getSiguiente(); // Avanza a la siguiente cabecera horizontal
+    }
+
+    archivo << "}";
+    archivo.close();
+
+    cout << "Archivo DOT generado correctamente: " << nombreArchivo << endl;
+}
+
+
+
+
+
 
 //se crea un usuario
 // el usuario tiene asociado un departamento y una empresa

@@ -34,7 +34,7 @@ public:
     Nodo *insertarCabeceraHorizontal(int valor);
     Nodo *insertarCabeceraVertical(int valor);
 
-    void insertarvalor(int valor, int cabecera_horizontal, int cabecera_vertical);
+    void insertarvalor(string valor, string cabecera_horizontal, string cabecera_vertical);
     void insertarALfinal(Nodo *valor, Nodo *cabeceraHorizontal, Nodo *cabeceraVertical);
     void insertarAlFinalHorizontal(Nodo *valor, Nodo *cabeceraHorizontal);
     void insertarAlFinalVertical(Nodo *valor, Nodo *cabeceraVertical);
@@ -46,9 +46,8 @@ public:
 
     bool masabajo(Nodo *cabeV, int cabecera_horizontal);
     bool masderecha(Nodo *cabeH, int cabecera_vertical);
+    //para graficar y tener un mejor control de las cosas
+    void graficarMatrizDisperza();
 
 };
-
-
-
 #endif //Matriz_Disperza_H

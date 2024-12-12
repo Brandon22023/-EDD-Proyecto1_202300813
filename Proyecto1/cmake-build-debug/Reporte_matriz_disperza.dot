@@ -1,0 +1,11 @@
+digraph G {
+    rankdir=LR;
+    node [shape=box, fontcolor=black];
+    { rank=same;
+    "CabH_0" [label="Dept: 0"];
+    }
+
+    "CabV_0" [label="Emp: 0"];
+    "Nodo_5" [label="Usuario: 5"];
+    "CabH_0" -> "Nodo_5" [dir=none];
+}
