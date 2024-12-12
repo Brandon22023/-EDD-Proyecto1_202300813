@@ -296,32 +296,34 @@ bool Matriz_Disperza::estavacia() {
 
 
 //para buscar a los usuarios existentes
-Nodo *Matriz_Disperza::buscarUsuario(string nombre, string departamento, string empresa) {
-    Nodo* cabeceraHorizontal = getcabeceraHo();
-    Nodo* cabeceraVertical = getcabecerave();
+Nodo *Matriz_Disperza::buscarUsuario(string valor) {
+    Nodo *cabeceraHorizontal = getcabeceraHo();
+    Nodo *cabeceraVertical = getcabecerave();
 
     while (cabeceraHorizontal != nullptr) {
         Nodo* auxiliar = cabeceraHorizontal->getAbajo();
         while (auxiliar != nullptr) {
-            // Verificamos si el valor en el nodo coincide con el nombre
-            // También verificamos que el nodo esté en la cabecera correspondiente de departamento y empresa
-            if (auxiliar->getValor() == nombre) {
-                Nodo* cabeceraV = cabeceraVertical;
-                while (cabeceraV != nullptr) {
-                    if (cabeceraV->getValor() == empresa) {
-                        if (cabeceraHorizontal->getValor() == departamento) {
-                            return auxiliar; // Usuario encontrado con el mismo departamento y empresa
-                        }
-                    }
-                    cabeceraV = cabeceraV->getAbajo();
-                }
+            if (auxiliar->getValor() == valor) {
+                return auxiliar;
             }
             auxiliar = auxiliar->getAbajo();
         }
         cabeceraHorizontal = cabeceraHorizontal->getSiguiente();
     }
 
-    return nullptr; // Si no se encuentra el usuario con el mismo nombre, departamento y empresa
+    while (cabeceraVertical != nullptr) {
+        Nodo* auxiliar = cabeceraVertical->getSiguiente();
+        while (auxiliar != nullptr) {
+            if (auxiliar->getValor() == valor) {
+                return auxiliar;
+            }
+            auxiliar = auxiliar->getSiguiente();
+        }
+        cabeceraVertical = cabeceraVertical->getAbajo();
+    }
+
+    return nullptr; // Si no hay usuario en la matriz
+
 }
 
 void Matriz_Disperza::insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente) {

@@ -1,0 +1,15 @@
+digraph MatrizDispersa {
+    rankdir=TB;
+    node [shape=box];
+    "depa" [label="cabho: depa", style=filled, color=lightblue];
+    "empresa" [label="cabho: empresa", style=filled, color=lightblue];
+    "empresa" [label="cabve: empresa", style=filled, color=lightgreen];
+    "empre" [label="cabve: empre", style=filled, color=lightgreen];
+    "depa" -> "empresa" [dir=both];
+    "empresa" -> "empre" [dir=both];
+    "juan" [label="valor: juan", style=filled, color=yellow];
+    "juan" -> "Diego" [dir=both];
+    "juan" -> "Diego" [dir=both];
+    "Diego" [label="valor: Diego", style=filled, color=yellow];
+    "lucas" [label="valor: lucas", style=filled, color=yellow];
+}

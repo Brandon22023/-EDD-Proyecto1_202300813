@@ -50,7 +50,7 @@ public:
     void graficarMatrizDisperza();
 
     //para buscar si existe o nelson el usuario y mandarlo pa adelante o pa atras
-    Nodo *buscarUsuario(string valor);
+    Nodo *buscarUsuario(string nombre, string departamento, string empresa);
     void insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente);
     void insertarAtras(Nodo *nuevoUsuario, Nodo *usuarioExistente);
 

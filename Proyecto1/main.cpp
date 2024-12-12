@@ -160,19 +160,28 @@ public:
         cout << "Ingrese el nombre del usuario: ";
         cin >> nombre;
 
-        // Verificar si el usuario ya existe
-        Nodo* usuarioExistente = matriz.buscarUsuario(nombre);
+        cout << "Ingrese la contraseña: ";
+        cin >> contrasena;
+
+        cout << "Ingrese el departamento: ";
+        cin >> departamento;
+
+        cout << "Ingrese la empresa: ";
+        cin >> empresa;
+
+        // Verificar si el usuario ya existe con los mismos datos (nombre, departamento, empresa)
+        Nodo* usuarioExistente = matriz.buscarUsuario(nombre, departamento, empresa);
 
         if (usuarioExistente != nullptr) {
             char opcion;
-            cout << "El usuario ya existe. ¿Desea registrar al nuevo usuario adelante o atrás del existente?" << endl;
+            cout << "El usuario ya existe en el departamento y empresa indicados. ¿Desea registrar al nuevo usuario adelante o atrás del existente?" << endl;
             cout << "Ingrese 'a' para adelante o 't' para atrás: ";
             cin >> opcion;
 
             // Crear el nuevo nodo de usuario y su contraseña
             Nodo *usuarioNuevo = new Nodo(nombre);
-            Nodo *contraNodo = new Nodo(contrasena);
-            usuarioNuevo->setcontra(contraNodo);
+            //Nodo *contraNodo = new Nodo(contrasena);
+            //usuarioNuevo->setcontra(contraNodo);
 
             if (opcion == 'a') {
                 // Insertar el nuevo usuario adelante
@@ -185,16 +194,6 @@ public:
             }
         } else {
             // Si el usuario no existe, proceder con el registro normal
-            cout << "Ingrese la contraseña: ";
-            cin >> contrasena;
-
-            cout << "Ingrese el departamento: ";
-            cin >> departamento;
-
-            cout << "Ingrese la empresa: ";
-            cin >> empresa;
-
-            // Insertar en la matriz dispersa
             matriz.insertarvalor(nombre, contrasena, departamento, empresa);
             cout << "Usuario creado exitosamente " << endl;
         }
