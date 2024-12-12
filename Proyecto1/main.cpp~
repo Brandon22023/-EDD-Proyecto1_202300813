@@ -60,9 +60,23 @@ public:
             Menu_administrador();
 
         }else {
-            cout << "Has iniciado sesion como Usuario..." << endl;
-            cout << "" << endl;
-            Menu_usuario();
+            Nodo *cabeceraHorizontal = matriz.getcabeceraHo();
+            while (cabeceraHorizontal != nullptr) { // mientras la cabecera horizontal no este vacia
+                Nodo *usuarioNodo = cabeceraHorizontal->getAbajo(); // Primer nodo en la columna de esta cabecera horizontal
+                while (usuarioNodo != nullptr) { // Recorremos la columna actual
+                    if (usuarioNodo->getValor() == nombre &&
+                        usuarioNodo->getcontra() != nullptr &&
+                        usuarioNodo->getcontra()->getValor() == contrasena) {
+                        cout << "Has iniciado sesion como Usuario..." << endl;
+                        cout << "" << endl;
+                        Menu_usuario();
+                        return;
+                        }
+                    usuarioNodo = usuarioNodo->getAbajo(); // Siguiente nodo en la columna
+                }
+                cabeceraHorizontal = cabeceraHorizontal->getSiguiente(); // Siguiente cabecera horizontal
+            }
+            cout << "Error: Usuario o contraseña incorrectos o no encontrados en la matriz." << endl;
         }
     }
     void Menu_administrador() {
@@ -154,7 +168,7 @@ public:
 
         cout << "Ingrese la empresa: ";
         cin >> empresa;
-        matriz.insertarvalor(nombre, departamento, empresa);
+        matriz.insertarvalor(nombre,contrasena, departamento, empresa);
         cout << "Usuario creado exitosamente " << endl;
     }
     void Menu_usuario() {
