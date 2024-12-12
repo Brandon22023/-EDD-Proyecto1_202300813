@@ -49,5 +49,13 @@ public:
     //para graficar y tener un mejor control de las cosas
     void graficarMatrizDisperza();
 
+    //para buscar si existe o nelson el usuario y mandarlo pa adelante o pa atras
+    Nodo *buscarUsuario(string valor);
+    void insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente);
+    void insertarAtras(Nodo *nuevoUsuario, Nodo *usuarioExistente);
+
+
+
+
 };
 #endif //Matriz_Disperza_H

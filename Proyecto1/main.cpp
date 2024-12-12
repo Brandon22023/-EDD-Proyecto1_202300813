@@ -160,16 +160,44 @@ public:
         cout << "Ingrese el nombre del usuario: ";
         cin >> nombre;
 
-        cout << "Ingrese la contraseña: ";
-        cin >> contrasena;
+        // Verificar si el usuario ya existe
+        Nodo* usuarioExistente = matriz.buscarUsuario(nombre);
 
-        cout << "Ingrese el departamento: ";
-        cin >> departamento;
+        if (usuarioExistente != nullptr) {
+            char opcion;
+            cout << "El usuario ya existe. ¿Desea registrar al nuevo usuario adelante o atrás del existente?" << endl;
+            cout << "Ingrese 'a' para adelante o 't' para atrás: ";
+            cin >> opcion;
 
-        cout << "Ingrese la empresa: ";
-        cin >> empresa;
-        matriz.insertarvalor(nombre,contrasena, departamento, empresa);
-        cout << "Usuario creado exitosamente " << endl;
+            // Crear el nuevo nodo de usuario y su contraseña
+            Nodo *usuarioNuevo = new Nodo(nombre);
+            Nodo *contraNodo = new Nodo(contrasena);
+            usuarioNuevo->setcontra(contraNodo);
+
+            if (opcion == 'a') {
+                // Insertar el nuevo usuario adelante
+                matriz.insertarAdelante(usuarioNuevo, usuarioExistente);
+            } else if (opcion == 't') {
+                // Insertar el nuevo usuario atrás
+                matriz.insertarAtras(usuarioNuevo, usuarioExistente);
+            } else {
+                cout << "Opción no válida. El usuario no se registrará." << endl;
+            }
+        } else {
+            // Si el usuario no existe, proceder con el registro normal
+            cout << "Ingrese la contraseña: ";
+            cin >> contrasena;
+
+            cout << "Ingrese el departamento: ";
+            cin >> departamento;
+
+            cout << "Ingrese la empresa: ";
+            cin >> empresa;
+
+            // Insertar en la matriz dispersa
+            matriz.insertarvalor(nombre, contrasena, departamento, empresa);
+            cout << "Usuario creado exitosamente " << endl;
+        }
     }
     void Menu_usuario() {
         int opcion= 0;

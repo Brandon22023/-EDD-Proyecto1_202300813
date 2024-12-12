@@ -295,8 +295,57 @@ bool Matriz_Disperza::estavacia() {
 }
 
 
+//para buscar a los usuarios existentes
+Nodo *Matriz_Disperza::buscarUsuario(string valor) {
+    Nodo *cabeceraHorizontal = getcabeceraHo();
+    Nodo *cabeceraVertical = getcabecerave();
 
+    while (cabeceraHorizontal != nullptr) {
+        Nodo* auxiliar = cabeceraHorizontal->getAbajo();
+        while (auxiliar != nullptr) {
+            if (auxiliar->getValor() == valor) {
+                return auxiliar;
+            }
+            auxiliar = auxiliar->getAbajo();
+        }
+        cabeceraHorizontal = cabeceraHorizontal->getSiguiente();
+    }
 
+    while (cabeceraVertical != nullptr) {
+        Nodo* auxiliar = cabeceraVertical->getSiguiente();
+        while (auxiliar != nullptr) {
+            if (auxiliar->getValor() == valor) {
+                return auxiliar;
+            }
+            auxiliar = auxiliar->getSiguiente();
+        }
+        cabeceraVertical = cabeceraVertical->getAbajo();
+    }
+
+    return nullptr; // Si no hay usuario en la matriz
+
+}
+
+void Matriz_Disperza::insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente) {
+    Nodo* adelante = usuarioExistente->getadelante();
+    usuarioExistente->setadelante(nuevoUsuario);
+    nuevoUsuario->setAtras(usuarioExistente);
+    if (adelante != nullptr) {
+        nuevoUsuario->setadelante(adelante);
+        adelante->setAtras(nuevoUsuario);
+    }
+}
+
+void Matriz_Disperza::insertarAtras(Nodo *nuevoUsuario, Nodo *usuarioExistente) {
+    Nodo* atras = usuarioExistente->getAtras();
+    usuarioExistente->setAtras(nuevoUsuario);
+    nuevoUsuario->setadelante(usuarioExistente);
+
+    if (atras != nullptr) {
+        nuevoUsuario->setAtras(atras);
+        atras->setadelante(nuevoUsuario);
+    }
+}
 
 
 void Matriz_Disperza::graficarMatrizDisperza() {
@@ -390,9 +439,7 @@ void Matriz_Disperza::graficarMatrizDisperza() {
 
 
 
-//se crea un usuario
-// el usuario tiene asociado un departamento y una empresa
-// se deben buscar el depa y la empresa y si no existe crearlas.
+
 
 
 

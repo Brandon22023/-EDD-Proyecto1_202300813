@@ -69,7 +69,7 @@ public:
                         usuarioNodo->getcontra()->getValor() == contrasena) {
                         cout << "Has iniciado sesion como Usuario..." << endl;
                         cout << "" << endl;
-                        Menu_usuario();
+                        Menu_usuario();//metodo de usuario
                         return;
                         }
                     usuarioNodo = usuarioNodo->getAbajo(); // Siguiente nodo en la columna
