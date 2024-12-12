@@ -27,14 +27,14 @@ public:
     //otros metodos
     bool estavacia();
 
-    Nodo *cabecerahorizontal(int valor);
-    Nodo *cabeceravertical(int valor);
+    Nodo *cabecerahorizontal(string valor);
+    Nodo *cabeceravertical(string valor);
 
 
-    Nodo *insertarCabeceraHorizontal(int valor);
-    Nodo *insertarCabeceraVertical(int valor);
+    Nodo *insertarCabeceraHorizontal(string valor);
+    Nodo *insertarCabeceraVertical(string valor);
 
-    void insertarvalor(string valor, string cabecera_horizontal, string cabecera_vertical);
+    void insertarvalor(string valor, string contra, string cabecera_horizontal, string cabecera_vertical);
     void insertarALfinal(Nodo *valor, Nodo *cabeceraHorizontal, Nodo *cabeceraVertical);
     void insertarAlFinalHorizontal(Nodo *valor, Nodo *cabeceraHorizontal);
     void insertarAlFinalVertical(Nodo *valor, Nodo *cabeceraVertical);
@@ -44,8 +44,8 @@ public:
     Nodo *enCabeceraHorizontal(Nodo *NODE);
     Nodo *enCabeceraVertical(Nodo *NODE);
 
-    bool masabajo(Nodo *cabeV, int cabecera_horizontal);
-    bool masderecha(Nodo *cabeH, int cabecera_vertical);
+    bool masabajo(Nodo *cabeV, string cabecera_horizontal);
+    bool masderecha(Nodo *cabeH, string cabecera_vertical);
     //para graficar y tener un mejor control de las cosas
     void graficarMatrizDisperza();
 

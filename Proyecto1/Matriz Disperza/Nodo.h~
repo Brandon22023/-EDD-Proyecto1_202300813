@@ -35,7 +35,7 @@ public:
     Nodo* getArriba();
     Nodo* getAbajo();
     Nodo* getAtras();
-    Nodo* getadelante();
+    Nodo* getAdelante();
     Nodo* getcontra();
 
     // Set
@@ -45,7 +45,6 @@ public:
     void setArriba(Nodo* arriba);
     void setAbajo(Nodo* abajo);
     void setAtras(Nodo* atras);
-    void setadelante(Nodo* adelante);
     void setcontra(Nodo* adelante);
 };
 

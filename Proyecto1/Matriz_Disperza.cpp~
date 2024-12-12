@@ -36,7 +36,7 @@ void Matriz_Disperza::insertarvalor(string valor, string contra, string cabecera
 
     Nodo *usuarioNuevo = new Nodo(valor);
     Nodo *contraNodo = new Nodo(contra);  // Nodo para la contraseña
-    usuarioNuevo->setcontra(contraNodo);
+    usuarioNuevo->setcontra(contra);
 
     if (estavacia()) {
         //no es el mismo nodo asi que no hay problemas

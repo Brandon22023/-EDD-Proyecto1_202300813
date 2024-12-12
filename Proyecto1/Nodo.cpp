@@ -3,9 +3,9 @@
 //
 #include "Matriz Disperza/Nodo.h"
 
+using namespace std;
 
-
-Nodo::Nodo(int valor) {
+Nodo::Nodo(string valor) {
     this->valor = valor;
     this->siguiente = nullptr;
     this->previo = nullptr;
@@ -13,10 +13,11 @@ Nodo::Nodo(int valor) {
     this->abajo = nullptr;
     this->adelante = nullptr;
     this->atras = nullptr;
+    this->contra = nullptr;
 }
 
 // Métodos *get*
-int Nodo::getValor() {
+string Nodo::getValor() {
     return valor;
 }
 
@@ -40,12 +41,15 @@ Nodo* Nodo::getAtras() {
     return atras;
 }
 
-Nodo* Nodo::getAdelante() {
+Nodo* Nodo::getadelante() {
     return adelante;
 }
 
+Nodo *Nodo::getcontra() {
+    return contra;
+}
 // Métodos *set*
-void Nodo::setValor(int valor) {
+void Nodo::setValor(string valor) {
     this->valor = valor;
 }
 
@@ -69,8 +73,12 @@ void Nodo::setAtras(Nodo* atras) {
     this->atras = atras;
 }
 
-void Nodo::setAdelante(Nodo* adelante) {
+void Nodo::setadelante(Nodo* adelante) {
     this->adelante = adelante;
+}
+
+void Nodo::setcontra(Nodo* contra) {
+    this->contra = contra;
 }
 
 

@@ -11,6 +11,7 @@ class Menus{
 
 
 public:
+    Matriz_Disperza matriz;
     void Menu_sesion() {
         int opc=0;
 
@@ -90,7 +91,7 @@ public:
                     break;
                 }
                 case 2:{
-                    cout << "opcion 2" << endl;
+                    matriz.graficarMatrizDisperza();
                     break;
                 }
 
@@ -153,8 +154,8 @@ public:
 
         cout << "Ingrese la empresa: ";
         cin >> empresa;
-
-        cout << "Usuario creado exitosamente con los datos: " << endl;
+        matriz.insertarvalor(nombre,contrasena, departamento, empresa);
+        cout << "Usuario creado exitosamente " << endl;
     }
     void Menu_usuario() {
         int opcion= 0;
@@ -278,14 +279,15 @@ public:
 
 
 int main() {
-    //Menus t_menus;
-    //t_menus.Menu_sesion();
-    Matriz_Disperza *matriz = new Matriz_Disperza();
-    matriz->insertarvalor(5,0,0);
+    Menus t_menus;
+    t_menus.Menu_sesion();
+    //Matriz_Disperza *matriz = new Matriz_Disperza();
+    //matriz->insertarvalor("juan","kiche","contaduria");
+    //matriz->insertarvalor("Diego","Palin","arquitecto");
     //matriz->insertarvalor(8, 1, 0);
     //matriz->insertarvalor(10, 2, 1);
     //matriz->insertarvalor(15, 1, 1);
-    matriz->graficarMatrizDisperza();
+    //matriz->graficarMatrizDisperza();
 
 
     //cout << "probando cosas" << endl;
