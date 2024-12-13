@@ -11,8 +11,9 @@ class AVL {
 private:
     NodoAVL *raiz;
     void insertar(NodoAVL *valor, NodoAVL* &raiz);
-    int alturaMaxima(NodoAVL *nodo);
-    int factorDeEquilibrio(NodoAVL *nodo);
+
+
+
 public:
     AVL();
 
@@ -20,6 +21,8 @@ public:
     NodoAVL *getRaiz();
     //set
     void setRaiz(NodoAVL *raiz);
+    int alturaMaxima(NodoAVL *nodo);
+    int factorDeEquilibrio(NodoAVL *nodo);
 
     //otros metodos
 

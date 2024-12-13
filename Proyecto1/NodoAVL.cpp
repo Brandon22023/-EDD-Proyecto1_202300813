@@ -22,11 +22,11 @@ int NodoAVL::getFactorEquilibrio() {
     return factorEquilibrio;
 }
 
-NodoAVL *NodoAVL::getIzquierda() {
+NodoAVL *&NodoAVL::getIzquierda() {
     return izquierda;
 }
 
-NodoAVL *NodoAVL::getDerecha() {
+NodoAVL *&NodoAVL::getDerecha() {
     return derecha;
 }
 //set

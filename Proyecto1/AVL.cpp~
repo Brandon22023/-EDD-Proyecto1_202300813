@@ -44,7 +44,7 @@ void AVL::insertar(NodoAVL *valor, NodoAVL *&raiz) {
         insertar(valor, raiz->getDerecha());
     }
 
-    cout << "el fe de "+ std::to_string(raiz->getValor()) + " es: "
+    cout << "el fe de "+ std::to_string(valor->getValor()) + " es: "
         + to_string(factorDeEquilibrio(raiz)) << endl;
 }
 

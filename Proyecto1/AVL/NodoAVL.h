@@ -19,8 +19,8 @@ public:
     //get
     int getValor();
     int getFactorEquilibrio();
-    NodoAVL* getIzquierda();
-    NodoAVL* getDerecha();
+    NodoAVL*& getIzquierda();
+    NodoAVL*& getDerecha();
 
     //set
     void setValor(int valor);

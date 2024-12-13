@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
-#include "Matriz Disperza/Matriz_Disperza.h"
 
+#include "AVL/AVL.h"
+#include "Matriz Disperza/Matriz_Disperza.h"
+#include "AVL/AVL.h"
 
 using namespace std;
 
@@ -320,8 +322,8 @@ public:
 
 
 int main() {
-    Menus t_menus;
-    t_menus.Menu_sesion();
+    //Menus t_menus;
+    //t_menus.Menu_sesion();
     //Matriz_Disperza *matriz = new Matriz_Disperza();
     //matriz->insertarvalor("juan","kiche","contaduria");
     //matriz->insertarvalor("Diego","Palin","arquitecto");
@@ -329,6 +331,18 @@ int main() {
     //matriz->insertarvalor(10, 2, 1);
     //matriz->insertarvalor(15, 1, 1);
     //matriz->graficarMatrizDisperza();
+
+    AVL*arbolAVL = new AVL();
+    arbolAVL->insertar(10);
+    arbolAVL->insertar(5);
+    arbolAVL->insertar(15);
+    arbolAVL->insertar(1);
+    arbolAVL->insertar(3);
+    arbolAVL->insertar(0);
+    arbolAVL->insertar(6);
+    arbolAVL->insertar(12);
+    arbolAVL->insertar(14);
+    arbolAVL->insertar(11);
 
 
     //cout << "probando cosas" << endl;
