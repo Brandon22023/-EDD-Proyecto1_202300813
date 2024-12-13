@@ -303,25 +303,22 @@ Nodo *Matriz_Disperza::buscarUsuario(string nombre, string departamento, string 
     while (cabeceraHorizontal != nullptr) {
         Nodo* auxiliar = cabeceraHorizontal->getAbajo();
         while (auxiliar != nullptr) {
-            // Verificamos si el valor en el nodo coincide con el nombre
-            // También verificamos que el nodo esté en la cabecera correspondiente de departamento y empresa
-            if (auxiliar->getValor() == nombre) {
-                Nodo* cabeceraV = cabeceraVertical;
-                while (cabeceraV != nullptr) {
-                    if (cabeceraV->getValor() == empresa) {
-                        if (cabeceraHorizontal->getValor() == departamento) {
-                            return auxiliar; // Usuario encontrado con el mismo departamento y empresa
-                        }
+            // Verificamos que el nodo esté en la cabecera correspondiente de departamento y empresa
+            Nodo* cabeceraV = cabeceraVertical;
+            while (cabeceraV != nullptr) {
+                if (cabeceraV->getValor() == empresa) {
+                    if (cabeceraHorizontal->getValor() == departamento) {
+                        return auxiliar; // Usuario encontrado en la misma posición, sin importar el nombre
                     }
-                    cabeceraV = cabeceraV->getAbajo();
                 }
+                cabeceraV = cabeceraV->getAbajo();
             }
             auxiliar = auxiliar->getAbajo();
         }
         cabeceraHorizontal = cabeceraHorizontal->getSiguiente();
     }
 
-    return nullptr; // Si no se encuentra el usuario con el mismo nombre, departamento y empresa
+    return nullptr; // Si no se encuentra ningún usuario en la posición
 }
 
 void Matriz_Disperza::insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente) {
@@ -425,21 +422,3 @@ void Matriz_Disperza::graficarMatrizDisperza() {
 
     std::cout << "Archivo DOT generado: " << nombreArchivo << std::endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

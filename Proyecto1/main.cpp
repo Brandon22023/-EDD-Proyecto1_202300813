@@ -76,7 +76,7 @@ public:
                 }
                 cabeceraHorizontal = cabeceraHorizontal->getSiguiente(); // Siguiente cabecera horizontal
             }
-            cout << "Error: Usuario o contraseña incorrectos o no encontrados en la matriz." << endl;
+            cout << "Error: Los datos son erroneos." << endl;
         }
     }
     void Menu_administrador() {
@@ -174,19 +174,19 @@ public:
 
         if (usuarioExistente != nullptr) {
             char opcion;
-            cout << "El usuario ya existe en el departamento y empresa indicados. ¿Desea registrar al nuevo usuario adelante o atrás del existente?" << endl;
-            cout << "Ingrese 'a' para adelante o 't' para atrás: ";
+            cout << "El usuario ya existe. ¿Desea registrar al nuevo usuario adelante o atrás del usuario existente?" << endl;
+            cout << "Ingrese 'a' para registrarlo adelante  o 'f' para registrarlo atrás: ";
             cin >> opcion;
 
             // Crear el nuevo nodo de usuario y su contraseña
             Nodo *usuarioNuevo = new Nodo(nombre);
-            //Nodo *contraNodo = new Nodo(contrasena);
-            //usuarioNuevo->setcontra(contraNodo);
+            Nodo *contraNodo = new Nodo(contrasena);
+            usuarioNuevo->setcontra(contraNodo);
 
             if (opcion == 'a') {
                 // Insertar el nuevo usuario adelante
                 matriz.insertarAdelante(usuarioNuevo, usuarioExistente);
-            } else if (opcion == 't') {
+            } else if (opcion == 'f') {
                 // Insertar el nuevo usuario atrás
                 matriz.insertarAtras(usuarioNuevo, usuarioExistente);
             } else {
@@ -334,4 +334,3 @@ int main() {
     //cout << "probando cosas" << endl;
     return 0;
 }
-

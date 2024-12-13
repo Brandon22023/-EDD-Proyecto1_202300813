@@ -5,20 +5,20 @@
 
 using namespace std;
 
-Nodo::Nodo(string valor) {
-    this->valor = valor;
+Nodo::Nodo(Usuario usuario) {
+    this->usuario = usuario;  // Almacenar el objeto Usuario
     this->siguiente = nullptr;
     this->previo = nullptr;
     this->arriba = nullptr;
     this->abajo = nullptr;
     this->adelante = nullptr;
     this->atras = nullptr;
-    this->contra = nullptr;
 }
 
 // Métodos *get*
-string Nodo::getValor() {
-    return valor;
+// Métodos *get* para obtener el objeto Usuario
+Usuario Nodo::getUsuario() {
+    return usuario;  // Devolver el objeto Usuario
 }
 
 Nodo* Nodo::getSiguiente() {
@@ -45,12 +45,10 @@ Nodo* Nodo::getadelante() {
     return adelante;
 }
 
-Nodo *Nodo::getcontra() {
-    return contra;
-}
+
 // Métodos *set*
-void Nodo::setValor(string valor) {
-    this->valor = valor;
+void Nodo::setUsuario(Usuario usuario) {
+    this->usuario = usuario;  // Asignar el objeto Usuario
 }
 
 void Nodo::setSiguiente(Nodo* siguiente) {
@@ -77,6 +75,8 @@ void Nodo::setadelante(Nodo* adelante) {
     this->adelante = adelante;
 }
 
-void Nodo::setcontra(Nodo* contra) {
-    this->contra = contra;
-}
+
+
+
+
+
