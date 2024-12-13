@@ -8,4 +8,8 @@ add_executable(Proyecto1 main.cpp
         Nodo.cpp
         "Matriz Disperza/Matriz_Disperza.h"
         Matriz_Disperza.cpp
+        AVL/NodoAVL.h
+        NodoAVL.cpp
+        AVL/AVL.h
+        AVL.cpp
 )
