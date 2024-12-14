@@ -49,25 +49,25 @@ void AVL::insertar(NodoAVL *valor, NodoAVL *&raiz) {
 
     if (raiz->getFactorEquilibrio() < -1) {
         if (raiz->getIzquierda()->getFactorEquilibrio() > 0) {
-            rotacionDerechaIzquierda(raiz);
+            rotacionIzquierdaDerecha(raiz);
 
             return;
 
         }
-        rotacionIzquierda(raiz);
+        rotacionDerecha(raiz);
         return;
     }
 
     if (raiz->getFactorEquilibrio() > 1) {
         if (raiz->getDerecha()->getFactorEquilibrio() < 0) {
-            rotacionIzquierdaDerecha(raiz);
+            rotacionDerechaIzquierda(raiz);
             return;
         }
-        rotacionDerecha(raiz);
+        rotacionIzquierda(raiz);
 
     }
 }
-void AVL::rotacionIzquierda(NodoAVL *&NODO) {
+void AVL::rotacionDerecha(NodoAVL *&NODO) {
 
     NodoAVL *auxiliar = NODO->getIzquierda();
 
@@ -76,10 +76,13 @@ void AVL::rotacionIzquierda(NodoAVL *&NODO) {
     NODO = auxiliar;
 
     NODO->setFactorEquilibrio(factorDeEquilibrio(NODO));
-    NODO->getIzquierda()->setFactorEquilibrio(factorDeEquilibrio(NODO->getIzquierda()));
     NODO->getDerecha()->setFactorEquilibrio(factorDeEquilibrio(NODO->getDerecha()));
+
+    if (NODO->getIzquierda() == nullptr) return;
+    NODO->getIzquierda()->setFactorEquilibrio(factorDeEquilibrio(NODO->getIzquierda()));
+
 }
-void AVL::rotacionDerecha(NodoAVL *&NODO) {
+void AVL::rotacionIzquierda(NodoAVL *&NODO) {
 
     NodoAVL *auxiliar = NODO->getDerecha();
 
@@ -89,18 +92,20 @@ void AVL::rotacionDerecha(NodoAVL *&NODO) {
 
     NODO->setFactorEquilibrio(factorDeEquilibrio(NODO));
     NODO->getIzquierda()->setFactorEquilibrio(factorDeEquilibrio(NODO->getIzquierda()));
+
+    if (NODO->getDerecha() == nullptr) return;
     NODO->getDerecha()->setFactorEquilibrio(factorDeEquilibrio(NODO->getDerecha()));
 
 }
-void AVL::rotacionIzquierdaDerecha(NodoAVL *&NODO) {
-    rotacionIzquierda(NODO->getDerecha());
-    rotacionDerecha(NODO);
+void AVL::rotacionDerechaIzquierda(NodoAVL *&NODO) {
+    rotacionDerecha(NODO->getDerecha());
+    rotacionIzquierda(NODO);
 
 }
 
-void AVL::rotacionDerechaIzquierda(NodoAVL *&NODO) {
-    rotacionDerecha(NODO->getIzquierda());
-    rotacionIzquierda(NODO);
+void AVL::rotacionIzquierdaDerecha(NodoAVL *&NODO) {
+    rotacionIzquierda(NODO->getIzquierda());
+    rotacionDerecha(NODO);
 
 }
 

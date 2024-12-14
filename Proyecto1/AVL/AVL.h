@@ -13,10 +13,10 @@ private:
     void insertar(NodoAVL *valor, NodoAVL* &raiz);
     int alturaMaxima(NodoAVL *nodo);
     int factorDeEquilibrio(NodoAVL *nodo);
-    void rotacionIzquierda(NodoAVL* &NODO);
     void rotacionDerecha(NodoAVL* &NODO);
-    void rotacionIzquierdaDerecha(NodoAVL* &NODO);
+    void rotacionIzquierda(NodoAVL* &NODO);
     void rotacionDerechaIzquierda(NodoAVL* &NODO);
+    void rotacionIzquierdaDerecha(NodoAVL* &NODO);
     std::string imprimir(NodoAVL *raiz, int &count);
 
 
