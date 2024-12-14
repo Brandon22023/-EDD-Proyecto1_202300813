@@ -5,6 +5,8 @@
 #include "AVL/AVL.h"
 #include "Matriz Disperza/Matriz_Disperza.h"
 #include <cstdlib> // Para system()
+#include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -221,9 +223,20 @@ public:
 
             switch(opcion) {
                 case 1:{
+                    string ID, nameActivo, Descripcion, tiempoRenta;
+                    long long IDACII;
+
+                    ID=ID_RANDOM();
+                    IDACII=ID_RANDOMACII(ID);
                     cout << "============================ Agregar Activo ============================" << endl;
                     cout << ">> Ingrese Nombre:" << endl;
+                    cin >> nameActivo;
                     cout << ">> Ingrese Descripcion:" << endl;
+                    cin >> Descripcion;
+                    cout << ">> Ingrese el tiempo de Renta:" << endl;
+                    cin >> tiempoRenta;
+
+                    cout << "ID del Activo: " << ID << "su IDACII es: " << IDACII << "su Nombre es: " << nameActivo << "su Descripcion es: " << Descripcion << "su Tiempo de Renta es: " << tiempoRenta << "" << endl;
                     break;
                 }
                 case 2:{
@@ -318,13 +331,60 @@ public:
         }while (opcion !=7);
 
     }
+    string ID_RANDOM(int longitud = 15) {
+        string codigo;
+        mt19937 generador(static_cast<unsigned>(std::time(nullptr)));//se genera dichas semillas
+        uniform_int_distribution<> tipoCaracter(0, 2);//se determina el tipo de carácter a generar, 1: letra mayúscula, 2: dígito
+        uniform_int_distribution<> letrasMinusculas('a', 'z'); //se generan las letras minúsculas
+        uniform_int_distribution<> letrasMayusculas('A', 'Z'); //se generan las letras mayusculas
+        uniform_int_distribution<> digitos('0', '9');//se genera numeros
+        for (int i = 0; i < longitud; ++i) {
+            // Elegimos el tipo de carácter
+            int tipo = tipoCaracter(generador);
+
+            // Variable para almacenar el carácter generado
+            char nuevoCaracter;
+            if (tipo == 0) {
+                // Generar una letra minúscula
+                nuevoCaracter = static_cast<char>(letrasMinusculas(generador));
+            } else if (tipo == 1) {
+                // Generar una letra mayúscula
+                nuevoCaracter = static_cast<char>(letrasMayusculas(generador));
+            } else {
+                // Generar un dígito
+                nuevoCaracter = static_cast<char>(digitos(generador));
+            }
+            // Añadimos el carácter generado al string final
+            codigo += nuevoCaracter;
+
+        }
+
+        //cout << "Codigo ASCII: " << codigosAscii << endl;
+        // Devolvemos el código generado
+        return codigo;
+    }
+
+    // Función para convertir un ID (string) en un único número entero que representa todos los códigos ASCII concatenados
+    long long ID_RANDOMACII(const string& codigo) {
+        long long codigosAscii = 0;  // Usamos long para manejar números grandes
+
+        for (char caracter : codigo) {
+            // Convertimos cada carácter a su código ASCII y lo añadimos a la variable codigosAscii
+            codigosAscii = codigosAscii * 1000 + static_cast<int>(caracter);  // *1000 para evitar que se solapen los números
+
+            // Esto asegura que no haya solapamiento entre los valores ASCII de los caracteres
+        }
+
+        return codigosAscii;
+    }
 };
 
 
 
 int main() {
-    //Menus t_menus;
-    //t_menus.Menu_sesion();
+    Menus t_menus;
+    //cout<<"el codigo generado es: " << t_menus.ID_RANDOM()<<endl;
+    t_menus.Menu_sesion();
     //Matriz_Disperza *matriz = new Matriz_Disperza();
     //matriz->insertarvalor("juan","kiche","contaduria");
     //matriz->insertarvalor("Diego","Palin","arquitecto");
@@ -333,7 +393,7 @@ int main() {
     //matriz->insertarvalor(15, 1, 1);
     //matriz->graficarMatrizDisperza();
 
-    AVL*arbolAVL = new AVL();
+    /*AVL*arbolAVL = new AVL();
     arbolAVL->insertar(10);
     arbolAVL->insertar(5);
     arbolAVL->insertar(4);
@@ -348,7 +408,7 @@ int main() {
     arbolAVL->hakai(10);
     arbolAVL->hakai(3);
     arbolAVL->hakai(12);
-    arbolAVL->hakai(6);
+    arbolAVL->hakai(6);*/
 
 
 
@@ -357,7 +417,7 @@ int main() {
     //string path = "/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/";
     //string path = "";
 
-    ofstream file("arbolAVL.dot");
+    /*ofstream file("arbolAVL.dot");
 
     if (!file) {
         cout << "Error al crear el archivo" << endl;
@@ -371,7 +431,7 @@ int main() {
     system(command.c_str());
 
     command = "start arbolAVL.svg";
-    system(command.c_str());
+    system(command.c_str());*/
 
 
 
