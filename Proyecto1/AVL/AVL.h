@@ -11,13 +11,16 @@ class AVL {
 private:
     NodoAVL *raiz;
     void insertar(NodoAVL *valor, NodoAVL* &raiz);
+    void hakai(int valor, NodoAVL* &raiz);
     int alturaMaxima(NodoAVL *nodo);
     int factorDeEquilibrio(NodoAVL *nodo);
     void rotacionDerecha(NodoAVL* &NODO);
     void rotacionIzquierda(NodoAVL* &NODO);
     void rotacionDerechaIzquierda(NodoAVL* &NODO);
     void rotacionIzquierdaDerecha(NodoAVL* &NODO);
+    NodoAVL *andateDerecha(NodoAVL* &NODO);
     std::string imprimir(NodoAVL *raiz, int &count);
+
 
 
 
@@ -33,6 +36,9 @@ public:
     //otros metodos
     bool esHoja(NodoAVL *nodo);
     void insertar(int valor);
+    void hakai(int valor);
+
+
     std::string imprimir();
 
 

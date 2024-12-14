@@ -345,6 +345,15 @@ int main() {
     arbolAVL->insertar(14);
     arbolAVL->insertar(11);
 
+    arbolAVL->hakai(10);
+    arbolAVL->hakai(3);
+    arbolAVL->hakai(12);
+    arbolAVL->hakai(6);
+
+
+
+
+
     //string path = "/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/";
     //string path = "";
 

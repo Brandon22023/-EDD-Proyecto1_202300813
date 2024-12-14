@@ -133,7 +133,6 @@ void AVL::hakai(int valor, NodoAVL *&raiz) {
             return;
         }
         rotacionIzquierda(raiz);
-        return;
 
     }
 
