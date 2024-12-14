@@ -1,8 +1,10 @@
+#include <fstream>
 #include <iostream>
 #include <string>
 
 #include "AVL/AVL.h"
 #include "Matriz Disperza/Matriz_Disperza.h"
+#include <cstdlib> // Para system()
 #include "AVL/AVL.h"
 
 using namespace std;
@@ -335,16 +337,59 @@ int main() {
     AVL*arbolAVL = new AVL();
     arbolAVL->insertar(10);
     arbolAVL->insertar(5);
-    arbolAVL->insertar(15);
-    arbolAVL->insertar(1);
+    arbolAVL->insertar(4);
+    /*arbolAVL->insertar(1);
     arbolAVL->insertar(3);
     arbolAVL->insertar(0);
     arbolAVL->insertar(6);
     arbolAVL->insertar(12);
     arbolAVL->insertar(14);
-    arbolAVL->insertar(11);
+    arbolAVL->insertar(11);*/
+
+    //string path = "/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/";
+    //string path = "";
+
+    ofstream file("arbolAVL.dot");
+
+    if (!file) {
+        cout << "Error al crear el archivo" << endl;
+    }
+
+    file <<arbolAVL->imprimir();
+    file.close();
+
+    string command = "dot -Tsvg arbolAVL.dot -o arbolAVL.svg";
+
+    system(command.c_str());
+
+    command = "start arbolAVL.svg";
+    system(command.c_str());
+
 
 
     //cout << "probando cosas" << endl;
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

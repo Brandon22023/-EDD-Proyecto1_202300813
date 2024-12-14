@@ -1,0 +1,9 @@
+digraph G {
+	node [shape = circle];
+	 n 0[label="5];
+	 n 0 -> n 1;
+	 n 1[label="4];
+	 n 0 -> n 2;
+	 n 2[label="10];
+	
+}

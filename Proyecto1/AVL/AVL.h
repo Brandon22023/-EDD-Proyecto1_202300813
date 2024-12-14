@@ -11,6 +11,13 @@ class AVL {
 private:
     NodoAVL *raiz;
     void insertar(NodoAVL *valor, NodoAVL* &raiz);
+    int alturaMaxima(NodoAVL *nodo);
+    int factorDeEquilibrio(NodoAVL *nodo);
+    void rotacionIzquierda(NodoAVL* &NODO);
+    void rotacionDerecha(NodoAVL* &NODO);
+    void rotacionIzquierdaDerecha(NodoAVL* &NODO);
+    void rotacionDerechaIzquierda(NodoAVL* &NODO);
+    std::string imprimir(NodoAVL *raiz, int &count);
 
 
 
@@ -21,12 +28,12 @@ public:
     NodoAVL *getRaiz();
     //set
     void setRaiz(NodoAVL *raiz);
-    int alturaMaxima(NodoAVL *nodo);
-    int factorDeEquilibrio(NodoAVL *nodo);
+
 
     //otros metodos
-
+    bool esHoja(NodoAVL *nodo);
     void insertar(int valor);
+    std::string imprimir();
 
 
 
