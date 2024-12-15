@@ -363,6 +363,7 @@ public:
         // Devolvemos el código generado
         return codigo;
     }
+
     // Función para convertir un ID (string) en un único número entero que representa todos los códigos ASCII concatenados
     long long ID_RANDOMACII(const string& codigo) {
         long long codigosAscii = 0;  // Usamos long para manejar números grandes
