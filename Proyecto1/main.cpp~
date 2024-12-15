@@ -257,7 +257,7 @@ public:
                         ElementoAVL elemento1(IDACII, nameActivo, Descripcion, tiempoRenta, usuarioActual);
                         // Agregar el activo a la lista de activos del usuario
                         listaUsuarios.agregarActivo(usuarioActual, elemento1);
-                    } catch (const exception &e) {
+                    } catch (const std::exception &e) {
                         cout << "Ocurrió un error: " << e.what() << endl;
                     } catch (...) {
                         cout << "Ocurrió un error inesperado." << endl;
@@ -268,40 +268,33 @@ public:
                 case 2: {
                     cout << "============================ Eliminar Activo ============================" << endl;
 
-                    try {
+                    // Primero, buscamos al usuario actual en la lista de usuarios
+                    NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
 
-                        // Primero, buscamos al usuario actual en la lista de usuarios
-                        NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
-
-                        if (usuario == nullptr) {
-                            cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
-                            break;  // Si no se encuentra el usuario, no hay activos que mostrar
-                        }
-
-                        // Si el usuario tiene activos, los mostramos
-                        NodoActivo* activoActual = usuario->cabezaActivos;
-
-                        if (activoActual == nullptr) {
-                            cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
-                        } else {
-                            cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
-
-                            while (activoActual != nullptr) {
-                                // Mostrar los detalles de cada activo
-                                cout << "ID: " << activoActual->activo.getValor()
-                                     << ", Nombre: " << activoActual->activo.getNombreActivo()
-                                     << ", Descripción: " << activoActual->activo.getDescripcion()
-                                     << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
-                                     << endl;
-                                activoActual = activoActual->siguiente;
-                            }
-                        }
-
-                    }catch (const exception &e) {
-                        cout << "Ocurrió un error: " << e.what() << endl;
-                    } catch (...) {
-                        cout << "Ocurrió un error inesperado." << endl;
+                    if (usuario == nullptr) {
+                        cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
+                        break;  // Si no se encuentra el usuario, no hay activos que mostrar
                     }
+
+                    // Si el usuario tiene activos, los mostramos
+                    NodoActivo* activoActual = usuario->cabezaActivos;
+
+                    if (activoActual == nullptr) {
+                        cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
+                    } else {
+                        cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
+
+                        while (activoActual != nullptr) {
+                            // Mostrar los detalles de cada activo
+                            cout << "ID: " << activoActual->activo.getValor()
+                                 << ", Nombre: " << activoActual->activo.getNombreActivo()
+                                 << ", Descripción: " << activoActual->activo.getDescripcion()
+                                 << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
+                                 << endl;
+                            activoActual = activoActual->siguiente;
+                        }
+                    }
+
                     break;
                 }
 
