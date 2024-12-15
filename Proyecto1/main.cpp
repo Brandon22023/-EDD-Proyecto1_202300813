@@ -7,16 +7,17 @@
 #include <cstdlib> // Para system()
 #include <random>
 #include <ctime>
+#include "AVL/ELEMENTOAVL.h"
+#include "pa los activos.cpp"
 
 using namespace std;
-
-
+AVL*arbolAVL = new AVL();
+ListaUsuariosAVL listaUsuarios;//no encontre otra opcion para guardar los activos de los usuarios
 class Menus{
-
-
-
 public:
     Matriz_Disperza matriz;
+    string usuarioActual;  // Variable para almacenar el usuario actual
+
     void Menu_sesion() {
         int opc=0;
 
@@ -73,6 +74,7 @@ public:
                         usuarioNodo->getcontra() != nullptr &&
                         usuarioNodo->getcontra()->getValor() == contrasena) {
                         cout << "Has iniciado sesion como Usuario..." << endl;
+                        usuarioActual = nombre;  // Guardamos el nombre del usuario autenticado
                         cout << "" << endl;
                         Menu_usuario();//metodo de usuario
                         return;
@@ -84,6 +86,7 @@ public:
             cout << "Error: Los datos son erroneos." << endl;
         }
     }
+
     void Menu_administrador() {
         int opc= 0;
 
@@ -115,7 +118,7 @@ public:
                 }
 
                 case 3:{
-                    cout << "opcion 3" << endl;
+                    paraimprimir();
                     break;
                 }
 
@@ -224,8 +227,9 @@ public:
             switch(opcion) {
                 case 1: {
                     try {
-                        string ID, nameActivo, Descripcion, tiempoRenta;
+                        string ID, nameActivo, Descripcion;
                         long long IDACII;
+                        int tiempoRenta;
 
                         // Generar IDs
                         ID = ID_RANDOM();
@@ -241,14 +245,18 @@ public:
                         getline(cin, Descripcion);
 
                         cout << ">> Ingrese el tiempo de Renta:" << endl;
-                        getline(cin, tiempoRenta);
+                        cin >> tiempoRenta;
 
                         // Mostrar datos
                         cout << "ID del Activo: " << ID << ", su IDACII es: " << IDACII
                              << ", su Nombre es: " << nameActivo
                              << ", su Descripcion es: " << Descripcion
-                             << ", su Tiempo de Renta es: " << tiempoRenta << endl;
+                             << ", su Tiempo de Renta (dias): " << tiempoRenta << ", su Usuario es: " << usuarioActual << endl;
 
+
+                        ElementoAVL elemento1(IDACII, nameActivo, Descripcion, tiempoRenta, usuarioActual);
+                        // Agregar el activo a la lista de activos del usuario
+                        listaUsuarios.agregarActivo(usuarioActual, elemento1);
                     } catch (const std::exception &e) {
                         cout << "Ocurrió un error: " << e.what() << endl;
                     } catch (...) {
@@ -257,8 +265,36 @@ public:
 
                     break;
                 }
-                case 2:{
+                case 2: {
                     cout << "============================ Eliminar Activo ============================" << endl;
+
+                    // Primero, buscamos al usuario actual en la lista de usuarios
+                    NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
+
+                    if (usuario == nullptr) {
+                        cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
+                        break;  // Si no se encuentra el usuario, no hay activos que mostrar
+                    }
+
+                    // Si el usuario tiene activos, los mostramos
+                    NodoActivo* activoActual = usuario->cabezaActivos;
+
+                    if (activoActual == nullptr) {
+                        cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
+                    } else {
+                        cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
+
+                        while (activoActual != nullptr) {
+                            // Mostrar los detalles de cada activo
+                            cout << "ID: " << activoActual->activo.getValor()
+                                 << ", Nombre: " << activoActual->activo.getNombreActivo()
+                                 << ", Descripción: " << activoActual->activo.getDescripcion()
+                                 << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
+                                 << endl;
+                            activoActual = activoActual->siguiente;
+                        }
+                    }
+
                     break;
                 }
 
@@ -394,6 +430,25 @@ public:
 
         return codigosAscii;
     }
+
+
+    void paraimprimir() {
+        ofstream file("arbolAVL.dot");
+
+        if (!file) {
+            cout << "Error al crear el archivo" << endl;
+        }
+
+        file <<arbolAVL->imprimir();
+        file.close();
+
+        string command = "dot -Tsvg arbolAVL.dot -o arbolAVL.svg";
+
+        system(command.c_str());
+
+        command = "start arbolAVL.svg";
+        system(command.c_str());
+    }
 };
 
 
@@ -420,9 +475,9 @@ int main() {
     arbolAVL->insertar(6);
     arbolAVL->insertar(12);
     arbolAVL->insertar(14);
-    arbolAVL->insertar(11);
+    arbolAVL->insertar(11);*/
 
-    arbolAVL->hakai(10);
+    /*arbolAVL->hakai(10);
     arbolAVL->hakai(3);
     arbolAVL->hakai(12);
     arbolAVL->hakai(6);*/
@@ -431,24 +486,13 @@ int main() {
 
 
 
+
+
+
     //string path = "/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/";
     //string path = "";
 
-    /*ofstream file("arbolAVL.dot");
 
-    if (!file) {
-        cout << "Error al crear el archivo" << endl;
-    }
-
-    file <<arbolAVL->imprimir();
-    file.close();
-
-    string command = "dot -Tsvg arbolAVL.dot -o arbolAVL.svg";
-
-    system(command.c_str());
-
-    command = "start arbolAVL.svg";
-    system(command.c_str());*/
 
 
 

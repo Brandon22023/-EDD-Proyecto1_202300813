@@ -24,7 +24,7 @@ public:
     NodoAVL*& getDerecha();
 
     //set
-    void setElemento(ElementoAVL elemento);
+    void setElemento(ElementoAVL &elemento);
     void setFactorEquilibrio(int factorEquilibrio);
     void setIzquierda(NodoAVL *izquierda);
     void setDerecha(NodoAVL *derecha);

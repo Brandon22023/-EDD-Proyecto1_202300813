@@ -12,4 +12,6 @@ add_executable(Proyecto1 main.cpp
         NodoAVL.cpp
         AVL/AVL.h
         AVL.cpp
+        AVL/ELEMENTOAVL.h
+        "pa los activos.cpp"
 )

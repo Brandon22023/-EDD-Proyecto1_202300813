@@ -7,15 +7,15 @@
 
 #include "Matriz Disperza/Nodo.h"
 
-NodoAVL::NodoAVL(int valor) {
-    this->valor = valor;
+NodoAVL::NodoAVL(ElementoAVL elemento) : elemento(elemento) {
     this->factorEquilibrio = 0;
     this->izquierda = nullptr;
     this->derecha = nullptr;
 }
+
 //get
-int NodoAVL::getValor() {
-    return valor;
+ElementoAVL NodoAVL::getElemento() {
+    return elemento;
 }
 
 int NodoAVL::getFactorEquilibrio() {
@@ -30,8 +30,8 @@ NodoAVL *&NodoAVL::getDerecha() {
     return derecha;
 }
 //set
-void NodoAVL::setValor(int valor) {
-    this->valor = valor;
+void NodoAVL::setElemento(ElementoAVL elemento) {
+    this->elemento = elemento;
 }
 
 void NodoAVL::setFactorEquilibrio(int factorEquilibrio) {

@@ -1,15 +1,11 @@
 digraph G {
 	node [shape = circle];
-	n0[label="5"];
+	n0[label="alfredo"];
 	n0 -> n1;
-	n1[label="1"];
+	n1[label="tono"];
 	n1 -> n2;
-	n2[label="0"];
-	n1 -> n3;
-	n3[label="4"];
-	n0 -> n4;
-	n4[label="11"];
-	n4 -> n5;
-	n5[label="14"];
+	n2[label="ju"];
+	n0 -> n3;
+	n3[label="marca"];
 	
 }

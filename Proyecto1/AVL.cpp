@@ -25,9 +25,8 @@ void AVL::setRaiz(NodoAVL *raiz) {
 
 //--------------------------------------------
 
-void AVL::insertar(int valor) {
-    NodoAVL *nodo = new NodoAVL(valor);
-
+void AVL::insertar(ElementoAVL elemento) {
+    NodoAVL* nodo = new NodoAVL(elemento);
     insertar(nodo, this->raiz);
 }
 
@@ -37,10 +36,9 @@ void AVL::insertar(NodoAVL *valor, NodoAVL *&raiz) {
     if (raiz== nullptr) {
         raiz = valor;
         raiz->setFactorEquilibrio(factorDeEquilibrio(raiz));
-
         return;
     }
-    if (valor->getValor() < raiz->getValor()) {
+    if (valor->getElemento().getValor() < raiz->getElemento().getValor()) {
         insertar(valor, raiz->getIzquierda());
     }else {
         insertar(valor, raiz->getDerecha());
@@ -78,7 +76,7 @@ void AVL::hakai(int valor, NodoAVL *&raiz) {
         cout<<"El valor: " + to_string(valor) + " no se encuentra en el arbol" <<endl;
         return;
     }
-    if (valor == raiz->getValor()) {
+    if (valor == raiz->getElemento().getValor()) {
 
         //primer caso "ser hoja"
         if (esHoja(raiz)) {
@@ -100,17 +98,17 @@ void AVL::hakai(int valor, NodoAVL *&raiz) {
 
         //tercer caso cuando ninguno es nulo, es buscar a la derecha del hijo izquierda
         NodoAVL *NODODERECHA = andateDerecha(raiz->getIzquierda());
-        raiz->setValor(NODODERECHA->getValor());
-        hakai(NODODERECHA->getValor(), raiz->getIzquierda());
+        raiz->getElemento().setValor(NODODERECHA->getElemento().getValor());
+        hakai(NODODERECHA->getElemento().getValor(), raiz->getIzquierda());
 
-        valor = raiz->getValor();
+        valor = raiz->getElemento().getValor();
 
     }
-    if (valor < raiz ->getValor()) {
+    if (valor < raiz ->getElemento().getValor()) {
         hakai(valor, raiz->getIzquierda());
 
     }
-    if (valor > raiz ->getValor()) {
+    if (valor > raiz ->getElemento().getValor()) {
         hakai(valor, raiz->getDerecha());
 
     }
@@ -230,7 +228,7 @@ std::string AVL::imprimir(NodoAVL *raiz, int &count) {
 
     int correntCount = count;
 
-    string dot = "n" + to_string(correntCount) + "[label=\"" + to_string(raiz->getValor()) + "\"];\n\t";
+    string dot = "n" + to_string(correntCount) + "[label=\"" + raiz->getElemento().getNombreActivo() + "\"];\n\t";
 
     if (esHoja(raiz)) {
         return dot;
@@ -247,9 +245,6 @@ std::string AVL::imprimir(NodoAVL *raiz, int &count) {
     }
 
     return dot;
-
-
-
 }
 
 

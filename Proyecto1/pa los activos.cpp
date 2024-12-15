@@ -1,0 +1,76 @@
+//
+// Created by Marro on 15/12/2024.
+//
+
+#include <fstream>
+
+#include <string>
+
+#include "AVL/AVL.h"
+
+using namespace std;
+
+class NodoActivo {
+public:
+    ElementoAVL activo;  // Aquí almacenamos el activo
+    NodoActivo* siguiente;
+
+    NodoActivo(ElementoAVL& elem) : activo(elem), siguiente(nullptr) {}
+};
+
+class NodoUsuario {
+public:
+    string nombreUsuario;
+    NodoActivo* cabezaActivos;  // Lista de activos de este usuario
+    NodoUsuario* siguiente;
+
+    NodoUsuario(string& nombre)
+        : nombreUsuario(nombre), cabezaActivos(nullptr), siguiente(nullptr) {}
+};
+
+class ListaUsuariosAVL {
+private:
+    NodoUsuario* cabeza;
+
+public:
+    ListaUsuariosAVL() : cabeza(nullptr) {}
+
+    // Busca un usuario por nombre
+    NodoUsuario* buscarUsuario(const std::string& nombre) {
+        NodoUsuario* actual = cabeza;
+        while (actual != nullptr) {
+            if (actual->nombreUsuario == nombre) {
+                return actual;
+            }
+            actual = actual->siguiente;
+        }
+        return nullptr;
+    }
+
+    // Agrega un nuevo usuario con su lista de activos
+    void agregarUsuario(string& nombre) {
+        if (buscarUsuario(nombre) == nullptr) {
+            NodoUsuario* nuevo = new NodoUsuario(nombre);
+            nuevo->siguiente = cabeza;
+            cabeza = nuevo;
+        }
+    }
+
+    // Agrega un activo a la lista de un usuario
+    void agregarActivo(string& nombreUsuario, ElementoAVL& activo) {
+        NodoUsuario* nodo = buscarUsuario(nombreUsuario);
+        if (nodo != nullptr) {
+            NodoActivo* nuevoActivo = new NodoActivo(activo);
+            nuevoActivo->siguiente = nodo->cabezaActivos;
+            nodo->cabezaActivos = nuevoActivo;
+        } else {
+            // Si no existe el usuario, creamos uno nuevo
+            agregarUsuario(nombreUsuario);
+            NodoUsuario* nodo = buscarUsuario(nombreUsuario);
+            NodoActivo* nuevoActivo = new NodoActivo(activo);
+            nuevoActivo->siguiente = nodo->cabezaActivos;
+            nodo->cabezaActivos = nuevoActivo;
+        }
+    }
+};
+

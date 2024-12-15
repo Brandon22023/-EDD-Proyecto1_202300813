@@ -21,9 +21,6 @@ private:
     NodoAVL *andateDerecha(NodoAVL* &NODO);
     std::string imprimir(NodoAVL *raiz, int &count);
 
-
-
-
 public:
     AVL();
 
@@ -31,11 +28,9 @@ public:
     NodoAVL *getRaiz();
     //set
     void setRaiz(NodoAVL *raiz);
-
-
     //otros metodos
     bool esHoja(NodoAVL *nodo);
-    void insertar(int valor);
+    void insertar(ElementoAVL elemento);
     void hakai(int valor);
 
 
