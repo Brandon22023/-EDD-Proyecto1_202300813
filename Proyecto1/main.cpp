@@ -222,21 +222,39 @@ public:
             cout << " " << endl;
 
             switch(opcion) {
-                case 1:{
-                    string ID, nameActivo, Descripcion, tiempoRenta;
-                    long long IDACII;
+                case 1: {
+                    try {
+                        string ID, nameActivo, Descripcion, tiempoRenta;
+                        long long IDACII;
 
-                    ID=ID_RANDOM();
-                    IDACII=ID_RANDOMACII(ID);
-                    cout << "============================ Agregar Activo ============================" << endl;
-                    cout << ">> Ingrese Nombre:" << endl;
-                    cin >> nameActivo;
-                    cout << ">> Ingrese Descripcion:" << endl;
-                    cin >> Descripcion;
-                    cout << ">> Ingrese el tiempo de Renta:" << endl;
-                    cin >> tiempoRenta;
+                        // Generar IDs
+                        ID = ID_RANDOM();
+                        IDACII = ID_RANDOMACII(ID);
 
-                    cout << "ID del Activo: " << ID << "su IDACII es: " << IDACII << "su Nombre es: " << nameActivo << "su Descripcion es: " << Descripcion << "su Tiempo de Renta es: " << tiempoRenta << "" << endl;
+                        // Solicitar datos al usuario
+                        cout << "============================ Agregar Activo ============================" << endl;
+                        cout << ">> Ingrese Nombre:" << endl;
+                        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+                        getline(cin, nameActivo);
+
+                        cout << ">> Ingrese Descripcion:" << endl;
+                        getline(cin, Descripcion);
+
+                        cout << ">> Ingrese el tiempo de Renta:" << endl;
+                        getline(cin, tiempoRenta);
+
+                        // Mostrar datos
+                        cout << "ID del Activo: " << ID << ", su IDACII es: " << IDACII
+                             << ", su Nombre es: " << nameActivo
+                             << ", su Descripcion es: " << Descripcion
+                             << ", su Tiempo de Renta es: " << tiempoRenta << endl;
+
+                    } catch (const std::exception &e) {
+                        cout << "Ocurrió un error: " << e.what() << endl;
+                    } catch (...) {
+                        cout << "Ocurrió un error inesperado." << endl;
+                    }
+
                     break;
                 }
                 case 2:{
