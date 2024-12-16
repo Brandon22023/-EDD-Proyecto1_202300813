@@ -13,14 +13,16 @@ private:
     string descripcion; // String adicional
     int tiempoRentar;
     string user;
+    string ID;
 
 public:
-    ElementoAVL(long long valor, string nombreActivo="", string descripcion = "", int tiempoRentar= 0, string user = "") {
+    ElementoAVL(long long valor, string nombreActivo="", string descripcion = "", int tiempoRentar= 0, string user = "", string ID="") {
         this->valor = valor;
         this->nombreActivo = nombreActivo;
         this->descripcion = descripcion;
         this->tiempoRentar = tiempoRentar;
         this->user = user;
+        this->ID = ID;
     }
 
     // Getters
@@ -39,6 +41,9 @@ public:
     }
     string getUser(){
         return user;
+    }
+    string getID(){
+        return ID;
     }
 
     // Setters
@@ -60,6 +65,10 @@ public:
 
     void setUser(string &user) {
         this->user = user;
+    }
+
+    void setID(string &ID) {
+        this->ID = ID;
     }
 };
 

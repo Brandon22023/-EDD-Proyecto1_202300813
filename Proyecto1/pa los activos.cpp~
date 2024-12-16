@@ -36,6 +36,11 @@ private:
 public:
     ListaUsuariosAVL() : cabeza(nullptr) {}
 
+    // Devuelve el primer nodo de la lista de usuarios
+    NodoUsuario* obtenerPrimero() {
+        return cabeza;
+    }
+
     // Busca un usuario por nombre
     NodoUsuario* buscarUsuario(const std::string& nombre) {
         NodoUsuario* actual = cabeza;

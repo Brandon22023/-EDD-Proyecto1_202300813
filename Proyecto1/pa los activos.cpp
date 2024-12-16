@@ -42,7 +42,7 @@ public:
     }
 
     // Busca un usuario por nombre
-    NodoUsuario* buscarUsuario(const std::string& nombre) {
+    NodoUsuario* buscarUsuario(const string& nombre) {
         NodoUsuario* actual = cabeza;
         while (actual != nullptr) {
             if (actual->nombreUsuario == nombre) {
@@ -51,6 +51,22 @@ public:
             actual = actual->siguiente;
         }
         return nullptr;
+    }
+
+    // Busca un usuario por ID de uno de sus activos
+    NodoUsuario* buscarUsuarioPorID(const int ID) {
+        NodoUsuario* actual = cabeza;
+        while (actual != nullptr) {
+            NodoActivo* activo = actual->cabezaActivos;
+            while (activo != nullptr) {
+                if (activo->activo.getValor() == ID) {  // Suponiendo que ElementoAVL tiene un campo ID
+                    return actual;
+                }
+                activo = activo->siguiente;
+            }
+            actual = actual->siguiente;
+        }
+        return nullptr;  // No se encontró el usuario con ese ID
     }
 
     // Agrega un nuevo usuario con su lista de activos

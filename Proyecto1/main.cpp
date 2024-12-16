@@ -258,7 +258,7 @@ public:
                              << ", su Tiempo de Renta (dias): " << tiempoRenta << ", su Usuario es: " << usuarioActual << endl;
 
 
-                        ElementoAVL elemento1(IDACII, nameActivo, Descripcion, tiempoRenta, usuarioActual);
+                        ElementoAVL elemento1(IDACII, nameActivo, Descripcion, tiempoRenta, usuarioActual, ID);
                         // Agregar el activo a la lista de activos del usuario
                         listaUsuarios.agregarActivo(usuarioActual, elemento1);
                     } catch (const exception &e) {
@@ -271,6 +271,7 @@ public:
                 }
                 case 2: {
                     long long ID_ELIMINAR;
+                    string ID_letrasNum;
                     cout << "============================ Eliminar Activo ============================" << endl;
 
                     try {
@@ -299,12 +300,12 @@ public:
 
                             while (activoActual != nullptr) {
                                 // Mostrar los detalles de cada activo
-                                cout << "ID: " << activoActual->activo.getValor()
+                                cout << "ID: " << activoActual->activo.getID()
                                      << ", Nombre: " << activoActual->activo.getNombreActivo()
                                      << ", Descripción: " << activoActual->activo.getDescripcion()
                                      << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
                                      << endl;
-                                ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual);
+                                ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual, activoActual->activo.getID());
                                 arbolAVL->insertar(elemento1);
                                 activoActual = activoActual->siguiente;
                             }
@@ -312,13 +313,44 @@ public:
                         paraimprimir();
 
                         // Solicitar el ID del activo a eliminar
-                        cout << "Ingrese el IDACII del activo a eliminar: ";
-                        cin >> ID_ELIMINAR;
+                        cout << "Ingrese el ID del activo a eliminar: ";
+
+                        cin>>ID_letrasNum;
+                        ID_ELIMINAR = ID_RANDOMACII(ID_letrasNum);
+
+                        // Buscamos el activo por ID antes de eliminarlo
+                        NodoUsuario* usuarioEliminar = listaUsuarios.buscarUsuario(usuarioActual);
+                        if (usuarioEliminar != nullptr) {
+                            NodoActivo* activoEliminar = usuarioEliminar->cabezaActivos;
+                            bool encontrado = false;
+
+                            while (activoEliminar != nullptr) {
+                                if (activoEliminar->activo.getValor() == ID_ELIMINAR) {
+                                    // Imprimir los detalles del activo a eliminar
+                                    cout << "Detalles del activo a eliminar:" << endl;
+                                    cout << "ID: " << activoEliminar->activo.getID()
+                                         << ", Nombre: " << activoEliminar->activo.getNombreActivo()
+                                         << ", Descripción: " << activoEliminar->activo.getDescripcion()
+                                         << ", Tiempo de Renta: " << activoEliminar->activo.getTiempoRentar() << " días"
+                                         << endl;
+                                    encontrado = true;
+                                    break;
+                                }
+                                activoEliminar = activoEliminar->siguiente;
+                            }
+
+                            if (!encontrado) {
+                                cout << "No se encontró un activo con el ID proporcionado." << endl;
+                                break;
+                            }
+                        } else {
+                            cout << "Usuario no encontrado." << endl;
+                            break;
+                        }
+
+
                         arbolAVL->hakai(ID_ELIMINAR);
-
                         paraimprimir();
-
-
                         stringstream buffer;
                         streambuf* oldCoutBuffer = cout.rdbuf(buffer.rdbuf()); // Redirigir cout
 
@@ -345,10 +377,10 @@ public:
 
                                 while (getline(buffer, linea)) {
                                     if (linea.find("ID:") != string::npos) {
-                                        long long idCapturado;
+                                        string idCapturado;
                                         stringstream(linea.substr(4)) >> idCapturado;
 
-                                        if (idCapturado == activo->activo.getValor()) {
+                                        if (idCapturado == activo->activo.getID()) {
                                             encontrado = true;
                                             break;
                                         }
@@ -356,7 +388,7 @@ public:
                                 }
 
                                 if (!encontrado) {
-                                    // Eliminar el activo si su ID no está en los ID capturados
+                                    // Eliminar el activo si su ID no está en los ID
                                     if (previo == nullptr) {
                                         nodoUsuario->cabezaActivos = activo->siguiente;
                                     } else {
@@ -383,35 +415,44 @@ public:
                 }
 
                 case 3:{
-                    cout << "============================ Modificar Activo ============================" << endl;
+                    try {
 
-                    // Primero, buscamos al usuario actual en la lista de usuarios
-                    NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
+                        cout << "============================ Modificar Activo ============================" << endl;
 
-                    if (usuario == nullptr) {
-                        cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
-                        break;  // Si no se encuentra el usuario, no hay activos que mostrar
-                    }
+                        // Primero, buscamos al usuario actual en la lista de usuarios
+                        NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
 
-                    // Si el usuario tiene activos, los mostramos
-                    NodoActivo* activoActual = usuario->cabezaActivos;
-
-                    if (activoActual == nullptr) {
-                        cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
-                    } else {
-                        cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
-
-                        while (activoActual != nullptr) {
-                            // Mostrar los detalles de cada activo
-                            cout << "ID: " << activoActual->activo.getValor()
-                                 << ", Nombre: " << activoActual->activo.getNombreActivo()
-                                 << ", Descripción: " << activoActual->activo.getDescripcion()
-                                 << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
-                                 << endl;
-                            activoActual = activoActual->siguiente;
+                        if (usuario == nullptr) {
+                            cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
+                            break;  // Si no se encuentra el usuario, no hay activos que mostrar
                         }
+
+                        // Si el usuario tiene activos, los mostramos
+                        NodoActivo* activoActual = usuario->cabezaActivos;
+
+                        if (activoActual == nullptr) {
+                            cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
+                        } else {
+                            cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
+
+                            while (activoActual != nullptr) {
+                                // Mostrar los detalles de cada activo
+                                cout << "ID: " << activoActual->activo.getID()
+                                     << ", Nombre: " << activoActual->activo.getNombreActivo()
+                                     << ", Descripción: " << activoActual->activo.getDescripcion()
+                                     << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
+                                     << endl;
+                                activoActual = activoActual->siguiente;
+                            }
+                        }
+                        cout << ">> Ingrese ID de Activo a Modificar: :" << endl;
+
+
+                    }catch (const exception &e) {
+                        cout << "Ocurrió un error: " << e.what() << endl;
+                    } catch (...) {
+                        cout << "Ocurrió un error inesperado." << endl;
                     }
-                    cout << ">> Ingrese ID de Activo a Modificar: :" << endl;
 
                     break;
                 }

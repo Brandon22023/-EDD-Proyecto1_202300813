@@ -227,7 +227,7 @@ void AVL::recorrerInorden(NodoAVL *nodo) {
     recorrerInorden(nodo->getIzquierda());
 
     // Luego procesamos el nodo raíz
-    cout << "ID: "<<nodo->getElemento().getValor() << " "<< endl;
+    cout << "ID: "<<nodo->getElemento().getID() << " "<< endl;
     cout <<"nombreActivo: "<< nodo->getElemento().getNombreActivo() << " "<< endl;
     cout << "descripcion del activo:  "<<nodo->getElemento().getDescripcion()<< " "<< endl;
     cout <<"tiempo: "<< nodo->getElemento().getTiempoRentar()<< " "<< endl;
