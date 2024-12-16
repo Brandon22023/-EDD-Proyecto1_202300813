@@ -7,6 +7,8 @@
 #include "pa los activos.cpp"
 #include <string>
 
+#include "Matriz Disperza/Nodo.h"
+
 
 using namespace std;
 
@@ -265,6 +267,34 @@ NodoAVL* AVL::buscarYModificarDescripcion(long long id, string& nuevaDescripcion
         return buscarYModificarDescripcion(id, nuevaDescripcion, nodo->getDerecha());
     }
 }
+
+
+//---------------------------------------------------
+NodoAVL *AVL::buscarporID(long long id, NodoAVL *nodo) {
+    if (nodo == nullptr) {
+        return nullptr; // No se encontró el nodo
+    }
+
+    if (id == nodo->getElemento().getValor()) {
+        // Se encontró el nodo, modificamos la descripción
+        return nodo;
+    }
+
+    if (id < nodo->getElemento().getValor()) {
+        // Buscar en el subárbol izquierdo
+        return buscarporID(id,  nodo->getIzquierda());
+    } else {
+        // Buscar en el subárbol derecho
+        return buscarporID(id, nodo->getDerecha());
+    }
+
+}
+
+NodoAVL *AVL::buscarporID(long long id) {
+    return buscarporID(id, this->raiz);
+
+}
+
 
 //-----------------------------------------
 std::string AVL::imprimir() {

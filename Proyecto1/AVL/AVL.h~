@@ -24,7 +24,7 @@ private:
     void rotacionIzquierdaDerecha(NodoAVL* &NODO);
     NodoAVL *andateDerecha(NodoAVL* &NODO);
     NodoAVL* buscarYModificarDescripcion(long long id, string& nuevaDescripcion, NodoAVL* nodo);
-    NodoAVL* buscarporID(long long id, NodoAVL* nodo);
+    NodoAVL* buscarporID(string id, NodoAVL* nodo);
 
     std::string imprimir(NodoAVL *raiz, int &count);
 
@@ -43,8 +43,7 @@ public:
     void recorrerInorden(NodoAVL *nodo);
     void recorrerInorden();
     NodoAVL* buscarYModificarDescripcion(long long id, string& nuevaDescripcion);
-    NodoAVL* buscarporID(long long id);
-
+    NodoAVL* buscarporID(string id);
 
     std::string imprimir();
 };

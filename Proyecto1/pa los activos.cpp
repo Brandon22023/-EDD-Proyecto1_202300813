@@ -95,5 +95,21 @@ public:
         }
     }
 
+    bool actualizarEstadoActivo(const string& ID, bool nuevoEstado) {
+        NodoUsuario* usuarioActual = cabeza;
+        while (usuarioActual != nullptr) {
+            NodoActivo* activoActual = usuarioActual->cabezaActivos;
+            while (activoActual != nullptr) {
+                if (activoActual->activo.getID() == ID) {  // Buscar activo por ID
+                    activoActual->activo.setRentar(nuevoEstado);  // Actualizar estado
+                    return true;  // Retornar éxito
+                }
+                activoActual = activoActual->siguiente;
+            }
+            usuarioActual = usuarioActual->siguiente;
+        }
+        return false;  // No se encontró el activo con el ID proporcionado
+    }
+
 };
 
