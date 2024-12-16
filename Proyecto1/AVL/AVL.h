@@ -23,7 +23,10 @@ private:
     void rotacionDerechaIzquierda(NodoAVL* &NODO);
     void rotacionIzquierdaDerecha(NodoAVL* &NODO);
     NodoAVL *andateDerecha(NodoAVL* &NODO);
+    NodoAVL* buscarYModificarDescripcion(long long id, string& nuevaDescripcion, NodoAVL* nodo);
+
     std::string imprimir(NodoAVL *raiz, int &count);
+
 
 public:
     AVL();
@@ -38,6 +41,7 @@ public:
     void hakai(long long valor);
     void recorrerInorden(NodoAVL *nodo);
     void recorrerInorden();
+    NodoAVL* buscarYModificarDescripcion(long long id, string& nuevaDescripcion);
 
     std::string imprimir();
 };

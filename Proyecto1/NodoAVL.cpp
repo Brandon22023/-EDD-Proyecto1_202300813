@@ -14,7 +14,7 @@ NodoAVL::NodoAVL(ElementoAVL elemento) : elemento(elemento) {
 }
 
 //get
-ElementoAVL NodoAVL::getElemento() {
+ElementoAVL &NodoAVL::getElemento() {
     return elemento;
 }
 

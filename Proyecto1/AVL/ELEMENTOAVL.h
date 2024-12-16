@@ -30,7 +30,7 @@ public:
         return valor;
     }
 
-    string getDescripcion(){
+    string &getDescripcion(){
         return descripcion;
     }
     string getNombreActivo(){

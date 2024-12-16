@@ -53,16 +53,20 @@ public:
         cout << "============================ Renta de Activos ============================" << endl;
         cout << "============================       Login      ============================ " << endl;
         cout << "Ingrese el nombre del usuario: ";
-        cin >> nombre;
+        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+        getline(cin, nombre);
 
-        cout << "Ingrese la contraseña: ";
-        cin >> contrasena;
+        cout << "Ingrese la contrasena: ";
+        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+        getline(cin, contrasena);
 
         cout << "Ingrese el departamento: ";
-        cin >> departamento;
+        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+        getline(cin, departamento);
 
         cout << "Ingrese la empresa: ";
-        cin >> empresa;
+        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+        getline(cin, empresa);
 
         if (contrasena == "admin" and nombre == "admin" and departamento == "admin" and empresa == "admin") {
             cout << "Has iniciado sesion como Administrador..." << endl;
@@ -262,9 +266,9 @@ public:
                         // Agregar el activo a la lista de activos del usuario
                         listaUsuarios.agregarActivo(usuarioActual, elemento1);
                     } catch (const exception &e) {
-                        cout << "Ocurrió un error: " << e.what() << endl;
+                        cout << "Ocurrio un error: " << e.what() << endl;
                     } catch (...) {
-                        cout << "Ocurrió un error inesperado." << endl;
+                        cout << "Ocurrio un error inesperado." << endl;
                     }
 
                     break;
@@ -302,7 +306,7 @@ public:
                                 // Mostrar los detalles de cada activo
                                 cout << "ID: " << activoActual->activo.getID()
                                      << ", Nombre: " << activoActual->activo.getNombreActivo()
-                                     << ", Descripción: " << activoActual->activo.getDescripcion()
+                                     << ", Descripcion: " << activoActual->activo.getDescripcion()
                                      << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
                                      << endl;
                                 ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual, activoActual->activo.getID());
@@ -330,7 +334,7 @@ public:
                                     cout << "Detalles del activo a eliminar:" << endl;
                                     cout << "ID: " << activoEliminar->activo.getID()
                                          << ", Nombre: " << activoEliminar->activo.getNombreActivo()
-                                         << ", Descripción: " << activoEliminar->activo.getDescripcion()
+                                         << ", Descripcion: " << activoEliminar->activo.getDescripcion()
                                          << ", Tiempo de Renta: " << activoEliminar->activo.getTiempoRentar() << " días"
                                          << endl;
                                     encontrado = true;
@@ -340,7 +344,7 @@ public:
                             }
 
                             if (!encontrado) {
-                                cout << "No se encontró un activo con el ID proporcionado." << endl;
+                                cout << "No se encontro un activo con el ID proporcionado." << endl;
                                 break;
                             }
                         } else {
@@ -407,9 +411,9 @@ public:
 
 
                     }catch (const exception &e) {
-                        cout << "Ocurrió un error: " << e.what() << endl;
+                        cout << "Ocurrio un error: " << e.what() << endl;
                     } catch (...) {
-                        cout << "Ocurrió un error inesperado." << endl;
+                        cout << "Ocurrio un error inesperado." << endl;
                     }
                     break;
                 }
@@ -417,7 +421,18 @@ public:
                 case 3:{
                     try {
 
+                        string ID_letrasNum, descripcion_nueva;
+                        long long ID_buscador;
+
                         cout << "============================ Modificar Activo ============================" << endl;
+                        //-----crearnuevo arbol
+                        // Crear un nuevo árbol AVL (reiniciar valores)
+                        if (arbolAVL != nullptr) {
+                            delete arbolAVL; // Liberar memoria del árbol anterior
+                        }
+                        arbolAVL = new AVL(); // Crear un nuevo árbol vacío
+
+                        //------crearnuevo arbol
 
                         // Primero, buscamos al usuario actual en la lista de usuarios
                         NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
@@ -439,26 +454,66 @@ public:
                                 // Mostrar los detalles de cada activo
                                 cout << "ID: " << activoActual->activo.getID()
                                      << ", Nombre: " << activoActual->activo.getNombreActivo()
-                                     << ", Descripción: " << activoActual->activo.getDescripcion()
+                                     << ", Descripcion: " << activoActual->activo.getDescripcion()
                                      << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
                                      << endl;
+                                ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual, activoActual->activo.getID());
+                                arbolAVL->insertar(elemento1);
                                 activoActual = activoActual->siguiente;
                             }
                         }
+                        //---------------------------------------------------------------------------
                         cout << ">> Ingrese ID de Activo a Modificar: :" << endl;
+                        cin >> ID_letrasNum;
+                        ID_buscador = ID_RANDOMACII(ID_letrasNum);
+                        cout << ">> Ingrese la nueva descripcion: :" << endl;
+                        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+                        getline(cin, descripcion_nueva);
 
+                        NodoAVL* nodoModificado = arbolAVL->buscarYModificarDescripcion(ID_buscador, descripcion_nueva);
+
+                        if (nodoModificado != nullptr) {
+                            cout << "Activo Modificado:" << endl;
+                            cout << "ID: " << nodoModificado->getElemento().getID() << endl;
+                            cout << "Nombre: " << nodoModificado->getElemento().getNombreActivo() << endl;
+                            cout << "Descripcion actualizada: " << nodoModificado->getElemento().getDescripcion() << endl;
+                            cout << "Tiempo de Renta: " << nodoModificado->getElemento().getTiempoRentar() << " días" << endl;
+
+                            // Ahora actualizamos la descripción en la lista de usuarios
+                            NodoActivo* activoLista = usuario->cabezaActivos;
+                            bool encontrado = false;
+
+                            while (activoLista != nullptr) {
+                                if (activoLista->activo.getID() == ID_letrasNum) {
+                                    // Si encontramos el activo, actualizamos la descripción en la lista de usuarios
+                                    activoLista->activo.setDescripcion(nodoModificado->getElemento().getDescripcion());
+                                    encontrado = true;
+                                    break;
+                                }
+                                activoLista = activoLista->siguiente;
+                            }
+
+                            if (!encontrado) {
+                                cout << "No se encontro el activo en la lista de usuarios." << endl;
+                            }
+
+                        } else {
+                            cout << "No se encontro un nodo con el ID proporcionado en el arbol AVL." << endl;
+                        }
 
                     }catch (const exception &e) {
-                        cout << "Ocurrió un error: " << e.what() << endl;
+                        cout << "Ocurrio un error: " << e.what() << endl;
                     } catch (...) {
-                        cout << "Ocurrió un error inesperado." << endl;
+                        cout << "Ocurrio un error inesperado." << endl;
                     }
 
                     break;
                 }
-
                 case 4:{
                     cout << "============================ Catalogo Activos   ============================" << endl;
+
+
+                    
                     cout << "" << endl;
                     cout << "" << endl;
                     do{

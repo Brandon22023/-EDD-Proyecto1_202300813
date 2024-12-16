@@ -229,7 +229,7 @@ void AVL::recorrerInorden(NodoAVL *nodo) {
     // Luego procesamos el nodo raíz
     cout << "ID: "<<nodo->getElemento().getID() << " "<< endl;
     cout <<"nombreActivo: "<< nodo->getElemento().getNombreActivo() << " "<< endl;
-    cout << "descripcion del activo:  "<<nodo->getElemento().getDescripcion()<< " "<< endl;
+    cout << "descripcion del activo: "<<nodo->getElemento().getDescripcion()<< " "<< endl;
     cout <<"tiempo: "<< nodo->getElemento().getTiempoRentar()<< " "<< endl;
     cout <<"usuario: "<<nodo->getElemento().getUser() << " "<<endl;
     // Finalmente recorremos el subárbol derecho
@@ -241,6 +241,30 @@ void AVL::recorrerInorden() {
     recorrerInorden(this->raiz);
 }
 
+
+NodoAVL* AVL::buscarYModificarDescripcion(long long id, string& nuevaDescripcion) {
+    return buscarYModificarDescripcion(id, nuevaDescripcion, this->raiz);
+}
+
+NodoAVL* AVL::buscarYModificarDescripcion(long long id, string& nuevaDescripcion, NodoAVL* nodo) {
+    if (nodo == nullptr) {
+        return nullptr; // No se encontró el nodo
+    }
+
+    if (id == nodo->getElemento().getValor()) {
+        // Se encontró el nodo, modificamos la descripción
+        nodo->getElemento().setDescripcion(nuevaDescripcion);
+        return nodo;
+    }
+
+    if (id < nodo->getElemento().getValor()) {
+        // Buscar en el subárbol izquierdo
+        return buscarYModificarDescripcion(id, nuevaDescripcion, nodo->getIzquierda());
+    } else {
+        // Buscar en el subárbol derecho
+        return buscarYModificarDescripcion(id, nuevaDescripcion, nodo->getDerecha());
+    }
+}
 
 //-----------------------------------------
 std::string AVL::imprimir() {

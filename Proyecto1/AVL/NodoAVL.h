@@ -18,7 +18,7 @@ public:
     explicit NodoAVL(ElementoAVL elemento);
 
     //get
-    ElementoAVL getElemento();
+    ElementoAVL &getElemento();
     int getFactorEquilibrio();
     NodoAVL*& getIzquierda();
     NodoAVL*& getDerecha();
