@@ -15,7 +15,7 @@ private:
     string user;
 
 public:
-    ElementoAVL(int valor, string nombreActivo="", string descripcion = "", int tiempoRentar, string user = "") {
+    ElementoAVL(int valor, string nombreActivo="", string descripcion = "", int tiempoRentar= 0, string user = "") {
         this->valor = valor;
         this->nombreActivo = nombreActivo;
         this->descripcion = descripcion;

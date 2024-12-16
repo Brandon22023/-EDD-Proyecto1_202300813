@@ -1,4 +1,7 @@
 digraph MatrizDispersa {
     rankdir=TB;
     node [shape=box];
+    "depa" [label="cabho: depa", style=filled, color=lightblue];
+    "empre" [label="cabve: empre", style=filled, color=lightgreen];
+    "juan" [label="valor: juan", style=filled, color=yellow];
 }

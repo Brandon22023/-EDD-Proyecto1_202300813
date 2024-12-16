@@ -5,13 +5,17 @@
 #ifndef AVL_H
 #define AVL_H
 
+
 #include "NodoAVL.h"
+
+
+
 
 class AVL {
 private:
     NodoAVL *raiz;
     void insertar(NodoAVL *valor, NodoAVL* &raiz);
-    void hakai(int valor, NodoAVL* &raiz);
+    void hakai(long long valor, NodoAVL* &raiz);
     int alturaMaxima(NodoAVL *nodo);
     int factorDeEquilibrio(NodoAVL *nodo);
     void rotacionDerecha(NodoAVL* &NODO);
@@ -31,20 +35,11 @@ public:
     //otros metodos
     bool esHoja(NodoAVL *nodo);
     void insertar(ElementoAVL elemento);
-    void hakai(int valor);
-
+    void hakai(long long valor);
+    void recorrerInorden(NodoAVL *nodo);
+    void recorrerInorden();
 
     std::string imprimir();
-
-
-
-
-
-
-
-
 };
-
-
 
 #endif //AVL_H

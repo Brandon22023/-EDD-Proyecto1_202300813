@@ -3,12 +3,14 @@
 //
 #include <iostream>
 #include "AVL/AVL.h"
-
+#include "AVL/ELEMENTOAVL.h"
+#include "pa los activos.cpp"
 #include <string>
+
 
 using namespace std;
 
-#include "Matriz Disperza/Nodo.h"
+
 
 using namespace std;
 AVL::AVL() {
@@ -66,11 +68,11 @@ void AVL::insertar(NodoAVL *valor, NodoAVL *&raiz) {
     }
 }
 
-void AVL::hakai(int valor) {
+void AVL::hakai(long long valor) {
     hakai(valor, this->raiz);
 }
 
-void AVL::hakai(int valor, NodoAVL *&raiz) {
+void AVL::hakai(long long valor, NodoAVL *&raiz) {
 
     if (raiz == nullptr) {
         cout<<"El valor: " + to_string(valor) + " no se encuentra en el arbol" <<endl;
@@ -210,7 +212,37 @@ int AVL::factorDeEquilibrio(NodoAVL *nodo) {
 bool AVL::esHoja(NodoAVL *nodo) {
     return nodo->getIzquierda() == nullptr && nodo->getDerecha() == nullptr;
 }
+//---------------------------------
+//recorrr dichoa AVL
+// Método para recorrer el árbol en orden (inorden)
 
+
+
+void AVL::recorrerInorden(NodoAVL *nodo) {
+    if (nodo == nullptr) {
+        return;
+    }
+
+    // Primero recorremos el subárbol izquierdo
+    recorrerInorden(nodo->getIzquierda());
+
+    // Luego procesamos el nodo raíz
+    cout << "ID: "<<nodo->getElemento().getValor() << " "<< endl;
+    cout <<"nombreActivo: "<< nodo->getElemento().getNombreActivo() << " "<< endl;
+    cout << "descripcion del activo:  "<<nodo->getElemento().getDescripcion()<< " "<< endl;
+    cout <<"tiempo: "<< nodo->getElemento().getTiempoRentar()<< " "<< endl;
+    cout <<"usuario: "<<nodo->getElemento().getUser() << " "<<endl;
+    // Finalmente recorremos el subárbol derecho
+    recorrerInorden(nodo->getDerecha());
+}
+
+// Método público que llama a la versión recursiva
+void AVL::recorrerInorden() {
+    recorrerInorden(this->raiz);
+}
+
+
+//-----------------------------------------
 std::string AVL::imprimir() {
     int count = -1;
     std::string dot = "digraph G {\n\tnode [shape = circle];\n\t" ;
@@ -222,7 +254,7 @@ std::string AVL::imprimir() {
     return dot;
 
 }
-
+//--------------------------------------------------
 std::string AVL::imprimir(NodoAVL *raiz, int &count) {
     count++;
 

@@ -8,14 +8,14 @@
 using namespace std;
 class ElementoAVL {
 private:
-    int valor;           // Entero original
+    long long valor;           // Entero original
     string nombreActivo;
     string descripcion; // String adicional
     int tiempoRentar;
     string user;
 
 public:
-    ElementoAVL(int valor, string nombreActivo="", string descripcion = "", int tiempoRentar= 0, string user = "") {
+    ElementoAVL(long long valor, string nombreActivo="", string descripcion = "", int tiempoRentar= 0, string user = "") {
         this->valor = valor;
         this->nombreActivo = nombreActivo;
         this->descripcion = descripcion;
@@ -24,7 +24,7 @@ public:
     }
 
     // Getters
-    int getValor() {
+    long long getValor() {
         return valor;
     }
 
@@ -42,7 +42,7 @@ public:
     }
 
     // Setters
-    void setValor(int valor) {
+    void setValor(long long valor) {
         this->valor = valor;
     }
 

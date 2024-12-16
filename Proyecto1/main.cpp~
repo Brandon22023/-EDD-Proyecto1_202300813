@@ -1,6 +1,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sstream>
+
 
 #include "AVL/AVL.h"
 #include "Matriz Disperza/Matriz_Disperza.h"
@@ -10,9 +12,11 @@
 #include "AVL/ELEMENTOAVL.h"
 #include "pa los activos.cpp"
 
+
 using namespace std;
 AVL*arbolAVL = new AVL();
 ListaUsuariosAVL listaUsuarios;//no encontre otra opcion para guardar los activos de los usuarios
+
 class Menus{
 public:
     Matriz_Disperza matriz;
@@ -257,7 +261,7 @@ public:
                         ElementoAVL elemento1(IDACII, nameActivo, Descripcion, tiempoRenta, usuarioActual);
                         // Agregar el activo a la lista de activos del usuario
                         listaUsuarios.agregarActivo(usuarioActual, elemento1);
-                    } catch (const std::exception &e) {
+                    } catch (const exception &e) {
                         cout << "Ocurrió un error: " << e.what() << endl;
                     } catch (...) {
                         cout << "Ocurrió un error inesperado." << endl;
@@ -266,7 +270,121 @@ public:
                     break;
                 }
                 case 2: {
+                    long long ID_ELIMINAR;
                     cout << "============================ Eliminar Activo ============================" << endl;
+
+                    try {
+
+                        // Crear un nuevo árbol AVL (reiniciar valores)
+                        if (arbolAVL != nullptr) {
+                            delete arbolAVL; // Liberar memoria del árbol anterior
+                        }
+                        arbolAVL = new AVL(); // Crear un nuevo árbol vacío
+
+                        // Primero, buscamos al usuario actual en la lista de usuarios
+                        NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
+
+                        if (usuario == nullptr) {
+                            cout << "No se ha encontrado al usuario " << usuarioActual << "." << endl;
+                            break;  // Si no se encuentra el usuario, no hay activos que mostrar
+                        }
+
+                        // Si el usuario tiene activos, los mostramos
+                        NodoActivo* activoActual = usuario->cabezaActivos;
+
+                        if (activoActual == nullptr) {
+                            cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
+                        } else {
+                            cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
+
+                            while (activoActual != nullptr) {
+                                // Mostrar los detalles de cada activo
+                                cout << "ID: " << activoActual->activo.getValor()
+                                     << ", Nombre: " << activoActual->activo.getNombreActivo()
+                                     << ", Descripción: " << activoActual->activo.getDescripcion()
+                                     << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
+                                     << endl;
+                                ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual);
+                                arbolAVL->insertar(elemento1);
+                                activoActual = activoActual->siguiente;
+                            }
+                        }
+                        paraimprimir();
+
+                        // Solicitar el ID del activo a eliminar
+                        cout << "Ingrese el IDACII del activo a eliminar: ";
+                        cin >> ID_ELIMINAR;
+                        arbolAVL->hakai(ID_ELIMINAR);
+
+                        paraimprimir();
+
+                        // Redirigir salida de recorrerInorden a un stringstream
+                        // Redirigir salida de recorrerInorden a un stringstream
+                        std::stringstream buffer;
+                        std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf()); // Redirigir cout
+
+                        // Recorrer el árbol AVL para capturar los valores en buffer
+                        arbolAVL->recorrerInorden();
+
+                        std::cout.rdbuf(oldCoutBuffer); // Restaurar cout a su estado original
+
+                        // Leer la salida capturada del stringstream y comparar con la lista de usuarios
+                        std::string linea;
+
+                        NodoUsuario* nodoUsuario = listaUsuarios.obtenerPrimero(); // Método que obtiene la cabeza de la lista
+
+                        while (nodoUsuario != nullptr) {
+                            NodoActivo* activo = nodoUsuario->cabezaActivos;
+                            NodoActivo* previo = nullptr;
+
+                            while (activo != nullptr) {
+                                bool encontrado = false;
+
+                                // Leer el stringstream línea por línea y buscar el ID
+                                buffer.clear();
+                                buffer.seekg(0, std::ios::beg); // Reiniciar el stream para leer desde el inicio
+
+                                while (std::getline(buffer, linea)) {
+                                    if (linea.find("ID:") != std::string::npos) {
+                                        long long idCapturado;
+                                        std::stringstream(linea.substr(4)) >> idCapturado;
+
+                                        if (idCapturado == activo->activo.getValor()) {
+                                            encontrado = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (!encontrado) {
+                                    // Eliminar el activo si su ID no está en los ID capturados
+                                    if (previo == nullptr) {
+                                        nodoUsuario->cabezaActivos = activo->siguiente;
+                                    } else {
+                                        previo->siguiente = activo->siguiente;
+                                    }
+                                    delete activo;
+                                    activo = (previo == nullptr) ? nodoUsuario->cabezaActivos : previo->siguiente;
+                                } else {
+                                    previo = activo;
+                                    activo = activo->siguiente;
+                                }
+                            }
+
+                            nodoUsuario = nodoUsuario->siguiente;
+                        }
+
+
+                    }catch (const exception &e) {
+                        cout << "Ocurrió un error: " << e.what() << endl;
+                    } catch (...) {
+                        cout << "Ocurrió un error inesperado." << endl;
+                    }
+                    break;
+                }
+
+                case 3:{
+                    cout << "============================ Modificar Activo ============================" << endl;
 
                     // Primero, buscamos al usuario actual en la lista de usuarios
                     NodoUsuario* usuario = listaUsuarios.buscarUsuario(usuarioActual);
@@ -294,13 +412,8 @@ public:
                             activoActual = activoActual->siguiente;
                         }
                     }
-
-                    break;
-                }
-
-                case 3:{
-                    cout << "============================ Modificar Activo ============================" << endl;
                     cout << ">> Ingrese ID de Activo a Modificar: :" << endl;
+
                     break;
                 }
 
