@@ -14,4 +14,5 @@ add_executable(Proyecto1 main.cpp
         AVL.cpp
         AVL/ELEMENTOAVL.h
         "pa los activos.cpp"
+        "Lista Circular Doblemente enlazada.cpp"
 )

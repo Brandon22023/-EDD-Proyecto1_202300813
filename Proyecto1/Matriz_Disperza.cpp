@@ -342,6 +342,39 @@ void Matriz_Disperza::insertarAtras(Nodo *nuevoUsuario, Nodo *usuarioExistente) 
     }
 }
 
+Nodo* Matriz_Disperza::buscarUsuarioEnMatriz(string nombreUsuario) {
+    Nodo* nodoHorizontal = cabeceraHo;  // Comenzamos con la cabecera horizontal (empresas)
+    Nodo* nodoVertical = cabecerave;    // Comenzamos con la cabecera vertical (usuarios)
+
+    // Recorremos la matriz de forma horizontal y vertical
+    while (nodoHorizontal != nullptr) {
+        // Recorremos los departamentos (cabeceras horizontales)
+        Nodo* nodoDepartamento = nodoHorizontal->getSiguiente(); // Primer nodo del departamento
+        while (nodoDepartamento != nullptr) {
+            // Recorremos los usuarios dentro de cada departamento
+            Nodo* nodoUsuario = nodoDepartamento->getAbajo(); // Primer usuario del departamento
+            while (nodoUsuario != nullptr) {
+                // Comprobamos si encontramos el usuario en este nodo
+                if (nodoUsuario->getValor() == nombreUsuario) {
+                    return nodoUsuario;  // Retorna el nodo que contiene el usuario
+                }
+
+                // Si no lo encontramos, avanzamos hacia el siguiente usuario en la misma empresa
+                nodoUsuario = nodoUsuario->getSiguiente();
+            }
+
+            // Avanzamos a la siguiente columna de usuario (mismo departamento pero otra empresa)
+            nodoDepartamento = nodoDepartamento->getSiguiente();
+        }
+
+        // Avanzamos a la siguiente cabecera horizontal (otra empresa)
+        nodoHorizontal = nodoHorizontal->getSiguiente();
+    }
+
+    // Si no encontramos al usuario en toda la matriz
+    return nullptr;
+}
+
 
 void Matriz_Disperza::graficarMatrizDisperza() {
     const std::string nombreArchivo = "Reporte_matriz_disperza.dot";

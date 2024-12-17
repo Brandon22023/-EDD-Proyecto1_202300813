@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
-
 #include "AVL/AVL.h"
 #include "Matriz Disperza/Matriz_Disperza.h"
 #include <cstdlib> // Para system()
@@ -11,16 +9,19 @@
 #include <ctime>
 #include "AVL/ELEMENTOAVL.h"
 #include "pa los activos.cpp"
-
+#include "Lista Circular Doblemente enlazada.cpp"
 
 using namespace std;
 AVL*arbolAVL = new AVL();
 ListaUsuariosAVL listaUsuarios;//no encontre otra opcion para guardar los activos de los usuarios
+ListaCircularDoble listaTransacciones;//pa transacciones
 
 class Menus{
 public:
     Matriz_Disperza matriz;
-    string usuarioActual;  // Variable para almacenar el usuario actual
+    string usuarioActual;//para autenticar el usuario
+    string Empresa_global; //recordar quitarlo solo son pruebas
+    string departamento_global;
 
     void Menu_sesion() {
         int opc=0;
@@ -60,9 +61,11 @@ public:
 
         cout << "Ingrese el departamento: ";
         getline(cin, departamento);
+        departamento_global = departamento;
 
         cout << "Ingrese la empresa: ";
         getline(cin, empresa);
+        Empresa_global = empresa;
 
         if (contrasena == "admin" and nombre == "admin" and departamento == "admin" and empresa == "admin") {
             cout << "Has iniciado sesion como Administrador..." << endl;
@@ -509,6 +512,10 @@ public:
                     try {
                         string ID_letrasNum_, usuario_nuevo;
                         long long ID_rentar;
+                        string name= usuarioActual;
+                        string ID_NOSE;
+
+
 
                         cout << "============================ Catalogo Activos ============================" << endl;
                         //-----crearnuevo arbol
@@ -574,6 +581,8 @@ public:
                                          << ", Descripcion: " << nodorentar->getElemento().getDescripcion()
                                          << ", Tiempo de Renta: " << nodorentar->getElemento().getTiempoRentar() << " dias"
                                          << endl;
+
+                                    ID_NOSE= nodorentar->getElemento().getID();
                                 }
 
                                 cout << ">> Ingrese dias a rentar:" << endl;
@@ -587,6 +596,15 @@ public:
                                     cout << "No se pudo actualizar el estado del activo. Por favor, verifica el ID." << endl;
                                 }
 
+                                string empresa= "";
+                                string departamento= "";
+                                string ID_transacciones = ID_RANDOM();
+                                string Fecha_actual = obtenerFechaActual();
+                                listaTransacciones.agregarTransaccion(ID_transacciones,
+                                                                      ID_NOSE, name,
+                                                                      departamento_global, Empresa_global, Fecha_actual, diasRenta);
+
+                                listaTransacciones.mostrarTransacciones();
                             } else if (opcion_2 == 2) {
                                 Menu_usuario();
                             } else {
@@ -725,14 +743,31 @@ public:
         command = "start arbolAVL.svg";
         system(command.c_str());
     }
+
+    string obtenerFechaActual() {
+        string FechaActual;
+        time_t t = time(nullptr);  // Obtener el tiempo actual
+        tm* now = localtime(&t);   // Convertir el tiempo a una estructura tm
+
+        // Concatenar los valores para formar la fecha en formato dd/mm/yyyy
+        FechaActual = to_string(now->tm_mday) + '/' +
+                      to_string(now->tm_mon + 1) + '/' +
+                      to_string(now->tm_year + 1900);
+
+        return FechaActual;
+    }
 };
+
+
 
 
 
 int main() {
     Menus t_menus;
-    //cout<<"el codigo generado es: " << t_menus.ID_RANDOM()<<endl;
     t_menus.Menu_sesion();
+
+
+
     //Matriz_Disperza *matriz = new Matriz_Disperza();
     //matriz->insertarvalor("juan","kiche","contaduria");
     //matriz->insertarvalor("Diego","Palin","arquitecto");
@@ -740,6 +775,20 @@ int main() {
     //matriz->insertarvalor(10, 2, 1);
     //matriz->insertarvalor(15, 1, 1);
     //matriz->graficarMatrizDisperza();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*AVL*arbolAVL = new AVL();
     arbolAVL->insertar(10);

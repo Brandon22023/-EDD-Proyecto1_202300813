@@ -53,7 +53,6 @@ public:
     Nodo *buscarUsuario(string nombre, string departamento, string empresa);
     void insertarAdelante(Nodo *nuevoUsuario, Nodo *usuarioExistente);
     void insertarAtras(Nodo *nuevoUsuario, Nodo *usuarioExistente);
-    Nodo *buscarUsuarioEnMatriz(string nombreUsuario);
 
 
 

@@ -1,7 +1,7 @@
 digraph G {
 	node [shape = circle];
-	n0[label="lop"];
+	n0[label="deik"];
 	n0 -> n1;
-	n1[label="jum"];
+	n1[label="as"];
 	
 }
