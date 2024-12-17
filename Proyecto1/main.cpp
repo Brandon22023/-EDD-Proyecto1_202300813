@@ -168,34 +168,39 @@ public:
 
                 case 6: {
 
-                    // Crear un nuevo árbol AVL (reinicia los haciendo nuevo arbol vacio)
-                    if (arbolAVL != nullptr) {
-                        delete arbolAVL; // Liberar memoria del árbol anterior
-                    }
-                    arbolAVL = new AVL(); // Crear nuevo árbol vacío
-                    string Usuario_buscar_ahora;
-                    cout << "Reporte Activos de un Usuario" << endl;
-                    cout << "Ingrese el nombre del usuario: ";
-                    cin >> Usuario_buscar_ahora;
-                    cout << "Buscando al usuario...generando arbol...." << endl;
-                    NodoUsuario* usuario = listaUsuarios.buscarUsuario(Usuario_buscar_ahora);
-
-                    // Verificar si el usuario existe
-                    if (usuario != nullptr) {
-                        // Recorrer la lista de activos del usuario
-                        NodoActivo* activoActual = usuario->cabezaActivos;
-                        while (activoActual != nullptr) {
-                            ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual, activoActual->activo.getID(), activoActual->activo.getRentar());
-                            arbolAVL->insertar(elemento1);
-
-                            activoActual = activoActual->siguiente; // Avanzar al siguiente activo
+                    try {
+                        // Crear un nuevo árbol AVL (reinicia los haciendo nuevo arbol vacio)
+                        if (arbolAVL != nullptr) {
+                            delete arbolAVL; // Liberar memoria del árbol anterior
                         }
-                    } else {
-                        cout << "Usuario no encontrado." << endl;
+                        arbolAVL = new AVL(); // Crear nuevo árbol vacío
+                        string Usuario_buscar_ahora;
+                        cout << "Reporte Activos de un Usuario" << endl;
+                        cout << "Ingrese el nombre del usuario: ";
+                        cin >> Usuario_buscar_ahora;
+                        cout << "Buscando al usuario...generando arbol...." << endl;
+                        NodoUsuario* usuario = listaUsuarios.buscarUsuario(Usuario_buscar_ahora);
+
+                        // Verificar si el usuario existe
+                        if (usuario != nullptr) {
+                            // Recorrer la lista de activos del usuario
+                            NodoActivo* activoActual = usuario->cabezaActivos;
+                            while (activoActual != nullptr) {
+                                ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), usuarioActual, activoActual->activo.getID(), activoActual->activo.getRentar());
+                                arbolAVL->insertar(elemento1);
+
+                                activoActual = activoActual->siguiente; // Avanzar al siguiente activo
+                            }
+                        } else {
+                            cout << "Usuario no encontrado." << endl;
+                        }
+                        paraimprimir();
+
+                    }catch (const exception &e) {
+                        cout << "Ocurrió un error: " << e.what() << endl;
+                    } catch (...) {
+                        cout << "Ocurrió un error inesperado." << endl;
                     }
-                    paraimprimir();
-
-
                     break;
                 }
 
