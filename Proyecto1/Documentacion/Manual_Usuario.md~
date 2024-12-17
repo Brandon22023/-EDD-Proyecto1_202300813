@@ -92,10 +92,9 @@ La herramienta Graphviz fue integrada para la generación de reportes gráficos,
 ![img_17.png](img_17.png)
 - ahora en la opcion de ordenar transacciones podemos ordenar dicha transaccion
 ![img_18.png](img_18.png)
+- la opcion 6 genera los activos rentados y los no rentados, rojo es rentado y verde es no rentado
 - cerramos sesion y terminamos el programa, no logre hacer los demas perdon :(
-    
-)
-
+![img_19.png](img_19.png)
 
 
 

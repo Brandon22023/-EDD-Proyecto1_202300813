@@ -314,8 +314,6 @@ std::string AVL::imprimir(NodoAVL *raiz, int &count) {
 
     int correntCount = count;
 
-    //si ya esta rentado sera de color rojo de lo contario verde
-
     string colorLetra = (raiz->getElemento().getrentar()) ? "red" : "green";
 
     string dot = "n" + to_string(correntCount) +
