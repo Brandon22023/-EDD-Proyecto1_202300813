@@ -6,13 +6,16 @@ digraph G {
     labelloc="t";
     fontsize=20;
     fontcolor=red;
-    nodo0 [label="ID: Unu2s19m9pK5dIO\nActivo: J0Nm5VEb039yiGa\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 1 días"];
-    nodo1 [label="ID: 6et5699SVYc106b\nActivo: J72rt047YIYw85C\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 4 días"];
-    nodo2 [label="ID: 5L7W349W7ds2396\nActivo: 7uuKtAxW4Bj1CH9\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 5 días"];
+    nodo0 [label="ID: 776TJDW1qxa4332\nActivo: pEqCmOQ8B1D84KD\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 4 días"];
+    nodo1 [label="ID: KxlInk99371CBlk\nActivo: G1dqAJuPwAAdXxG\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 11 días"];
+    nodo2 [label="ID: V2f2jpKo6Yhe441\nActivo: xvDk5hU7rvZ2s03\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 4 días"];
+    nodo3 [label="ID: hk2atbc46s59ePp\nActivo: 74URj77Zb3V3xaG\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 4 días"];
     nodo0 -> nodo1 [color=orange];
-    nodo0 -> nodo2 [color=orange, dir=back];
+    nodo0 -> nodo3 [color=orange, dir=back];
     nodo1 -> nodo2 [color=orange];
     nodo1 -> nodo0 [color=orange, dir=back];
-    nodo2 -> nodo0 [color=orange];
+    nodo2 -> nodo3 [color=orange];
     nodo2 -> nodo1 [color=orange, dir=back];
+    nodo3 -> nodo0 [color=orange];
+    nodo3 -> nodo2 [color=orange, dir=back];
 }

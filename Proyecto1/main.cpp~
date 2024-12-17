@@ -51,7 +51,6 @@ public:
                     case 2: {
                         cout << "Has seleccionado la opcion de Salir del programa." << endl;
                         cout << "Saliendo..." << endl;
-                        exit(0);
                         return; // Salida limpia
                     }
                     default: ;
