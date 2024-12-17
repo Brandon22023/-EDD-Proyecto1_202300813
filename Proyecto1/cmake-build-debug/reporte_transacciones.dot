@@ -1,0 +1,18 @@
+digraph G {
+    node [shape=box, color=black, style=filled, fillcolor=gray, fontcolor=white];
+    graph [splines=polyline, nodesep=0.5];
+    rankdir=LR;
+    label="Transacciones";
+    labelloc="t";
+    fontsize=20;
+    fontcolor=red;
+    nodo0 [label="ID: Unu2s19m9pK5dIO\nActivo: J0Nm5VEb039yiGa\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 1 días"];
+    nodo1 [label="ID: 6et5699SVYc106b\nActivo: J72rt047YIYw85C\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 4 días"];
+    nodo2 [label="ID: 5L7W349W7ds2396\nActivo: 7uuKtAxW4Bj1CH9\nUsuario: juan\nDepto/Emp: depa / empre\nFecha: 17/12/2024\nTiempo: 5 días"];
+    nodo0 -> nodo1 [color=orange];
+    nodo0 -> nodo2 [color=orange, dir=back];
+    nodo1 -> nodo2 [color=orange];
+    nodo1 -> nodo0 [color=orange, dir=back];
+    nodo2 -> nodo0 [color=orange];
+    nodo2 -> nodo1 [color=orange, dir=back];
+}

@@ -27,70 +27,103 @@ public:
         int opc=0;
 
         do {
-            cout << "============================ Renta de Activos ============================" << endl;
-            cout << "============================ 1. Iniciar sesion ============================ " << endl;
-            cout << "============================ 2. Salir del programa ============================ " << endl;
-            cout << "Ingrese una opcion" << endl;
-            cin >> opc;
+            try {
+                cout << "============================ Renta de Activos ============================" << endl;
+                cout << "============================ 1. Iniciar sesion ============================ " << endl;
+                cout << "============================ 2. Salir del programa ============================ " << endl;
+                cout << "Ingrese una opcion: ";
 
-            switch(opc) {
-                case 1:{
-                    login();
-                    break;
+                // Habilitar excepciones en cin
+                cin.exceptions(ios::failbit | ios::badbit);
+
+                cin >> opc;
+
+                // Validación de opción fuera de rango
+                if (opc < 1 || opc > 2) {
+                    throw out_of_range("Opcion fuera de rango. Intente de nuevo.");
                 }
-                case 2:{
-                    cout << "Has seleccionado la opcion de Salir del programa" << endl;
-                    exit(0);
+
+                switch (opc) {
+                    case 1: {
+                        login();
+                        break;
+                    }
+                    case 2: {
+                        cout << "Has seleccionado la opcion de Salir del programa." << endl;
+                        cout << "Saliendo..." << endl;
+                        return; // Salida limpia
+                    }
+
                 }
-                default:
-                    cout << "Opcion no valida, intente de nuevo" << endl;
+
+            } catch (const ios_base::failure& e) {
+                // Captura errores de flujo (entrada inválida)
+                cin.clear(); // Restablece el estado del flujo
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpia el buffer
+                cout << "Error: Entrada invalida. Por favor, ingrese un numero valido." << endl;
+            } catch (const out_of_range& e) {
+                // Captura errores cuando la opción está fuera del rango permitido
+                cout << "Error: " << e.what() << endl;
+            } catch (...) {
+                // Captura cualquier otra excepción inesperada
+                cout << "Error desconocido. Intente de nuevo." << endl;
             }
-
-        }while (opc !=2);
+        } while (true);
 
     }
     void login() {
-        string nombre, contrasena, departamento, empresa;
-        cout << "============================ Renta de Activos ============================" << endl;
-        cout << "============================       Login      ============================ " << endl;
-        cout << "Ingrese el nombre del usuario: ";
-        cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
-        getline(cin, nombre);
-        cout << "Ingrese la contrasena: ";
-        getline(cin, contrasena);
 
-        cout << "Ingrese el departamento: ";
-        getline(cin, departamento);
-        departamento_global = departamento;
+        try {
+            string nombre, contrasena, departamento, empresa;
+            cout << "============================ Renta de Activos ============================\n";
+            cout << "============================       Login      ============================ \n";
+            cout << "Ingrese el nombre del usuario: ";
+            cin.ignore(); // Para limpiar el buffer antes de getline si se usan espacios
+            getline(cin, nombre);
 
-        cout << "Ingrese la empresa: ";
-        getline(cin, empresa);
-        Empresa_global = empresa;
+            cout << "Ingrese la contrasena: ";
+            getline(cin, contrasena);
 
-        if (contrasena == "admin" and nombre == "admin" and departamento == "admin" and empresa == "admin") {
-            cout << "Has iniciado sesion como Administrador..." << endl;
-            cout << "" << endl;
-            Menu_administrador();
+            cout << "Ingrese el departamento: ";
+            getline(cin, departamento);
+            departamento_global = departamento;
 
-        }else {
-            Nodo *cabeceraHorizontal = matriz.getcabeceraHo();
-            while (cabeceraHorizontal != nullptr) { // mientras la cabecera horizontal no este vacia
-                Nodo *usuarioNodo = cabeceraHorizontal->getAbajo(); // Primer nodo en la columna de esta cabecera horizontal
-                while (usuarioNodo != nullptr) { // Recorremos la columna actual
-                    if (usuarioNodo->getValor() == nombre &&
-                        usuarioNodo->getcontra() != nullptr &&
-                        usuarioNodo->getcontra()->getValor() == contrasena) {
-                        cout << "Has iniciado sesion como Usuario..." << endl;
-                        usuarioActual = nombre;  // Guardamos el nombre del usuario autenticado
-                        cout << "" << endl;
-                        Menu_usuario();//metodo de usuario
-                        return;
+            cout << "Ingrese la empresa: ";
+            getline(cin, empresa);
+            Empresa_global = empresa;
+
+            if (contrasena == "admin" && nombre == "admin" && departamento == "admin" && empresa == "admin") {
+                cout << "Has iniciado sesion como Administrador..." << endl;
+                Menu_administrador();
+            } else {
+                Nodo* cabeceraHorizontal = matriz.getcabeceraHo();
+                bool usuarioEncontrado = false;
+
+                while (cabeceraHorizontal != nullptr) { // mientras la cabecera horizontal no este vacia
+                    Nodo* usuarioNodo = cabeceraHorizontal->getAbajo(); // Primer nodo en la columna de esta cabecera horizontal
+                    while (usuarioNodo != nullptr) { // Recorremos la columna actual
+                        if (usuarioNodo->getValor() == nombre &&
+                            usuarioNodo->getcontra() != nullptr &&
+                            usuarioNodo->getcontra()->getValor() == contrasena) {
+                            cout << "Has iniciado sesion como Usuario..." << endl;
+                            usuarioActual = nombre;  // Guardamos el nombre del usuario autenticado
+                            Menu_usuario();
+                            usuarioEncontrado = true;
+                            return;
                         }
-                    usuarioNodo = usuarioNodo->getAbajo(); // Siguiente nodo en la columna
+                        usuarioNodo = usuarioNodo->getAbajo(); // Siguiente nodo en la columna
+                    }
+                    cabeceraHorizontal = cabeceraHorizontal->getSiguiente(); // Siguiente cabecera horizontal
                 }
-                cabeceraHorizontal = cabeceraHorizontal->getSiguiente(); // Siguiente cabecera horizontal
+
+                if (!usuarioEncontrado) {
+                    throw runtime_error("Error: Los datos son erroneos.");
+                }
             }
-            cout << "Error: Los datos son erroneos." << endl;
+        } catch (const runtime_error& e) {
+            cerr << e.what() << endl;
+        } catch (const exception& e) {
+            cerr << "Error inesperado: " << e.what() << endl;
         }
     }
     void Menu_administrador() {
@@ -134,7 +167,8 @@ public:
                 }
 
                 case 5:{
-                    cout << "opcion 5" << endl;
+                    cout << "Haciendo el reporte... espere por favor..." << endl;
+                    listaTransacciones.graficarTransacciones();
                     break;
                 }
 
@@ -148,8 +182,39 @@ public:
                     break;
                 }
 
-                case 8:{
-                    cout << "opcion 8" << endl;
+                case 8: {
+                    int opcionOrdenar = 0;
+                    cout << "------------------------------------Ordenar Transacciones----------------------------------" << endl;
+                    cout << "Elija la manera en la cual quiere ordenar las transacciones:" << endl;
+                    cout << "1. Ascendente" << endl;
+                    cout << "2. Descendente" << endl;
+
+                    // Validación de entrada
+                    while (true) {
+                        cout << "Ingrese su opción (1 o 2): ";
+                        if (!(cin >> opcionOrdenar)) {
+                            cerr << "Error: Entrada inválida. Por favor ingrese un número." << endl;
+                            cin.clear(); // Limpiar el estado de error de cin
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar el buffer
+                        } else if (opcionOrdenar < 1 || opcionOrdenar > 2) {
+                            cerr << "Error: Opción fuera de rango. Elija 1 o 2." << endl;
+                        } else {
+                            break; // Entrada válida
+                        }
+                    }
+
+                    // Procesar la opción elegida
+                    if (opcionOrdenar == 1) {
+                        cout << "Ordenando las transacciones en orden Ascendente..." << endl;
+                        listaTransacciones.ordenarAscendente();
+                        listaTransacciones.graficarTransacciones();
+                        // Aquí llama a la función de ordenar Ascendente
+                    } else if (opcionOrdenar == 2) {
+                        cout << "Ordenando las transacciones en orden Descendente..." << endl;
+                        listaTransacciones.ordenarDescendente();
+                        listaTransacciones.graficarTransacciones();
+                        // Aquí llama a la función de ordenar Descendente
+                    }
                     break;
                 }
 
@@ -447,8 +512,6 @@ public:
                         if (activoActual == nullptr) {
                             cout << "No hay activos registrados para el usuario " << usuarioActual << "." << endl;
                         } else {
-                            cout << "Estos son los activos del usuario " << usuarioActual << ":" << endl;
-
                             while (activoActual != nullptr) {
                                 // Mostrar los detalles de cada activo
                                 cout << "ID: " << activoActual->activo.getID()
@@ -621,26 +684,43 @@ public:
                     break;
 
                 }
-
                 case 5:{
-                    cout << "============================ Activos Rentados   ============================" << endl;
+                    int elegir;
+                    string ID_E;
+                    cout << "============================ Activos Rentados ============================" << endl;
                     cout << "" << endl;
                     cout << "" << endl;
-                    do{
-                        cout << ">> 1. Registrar Devolucon" << endl;
-                        cout << ">> 2. Regresar a Menu" << endl;
-                        cout << ">> Ingrese una opcion" << endl;
-                        cin >> opcion2;
-                        if (opcion2 == 1) {
-                            cout << ">> Ingrese ID de Activo a Devolver: :" << endl;
 
-                        } else if (opcion2 == 2) {
-                            Menu_usuario();
+                    do {
+                        try {
+                            cout << ">> 1. Registrar Devolucon" << endl;
+                            cout << ">> 2. Regresar a Menu" << endl;
+                            cout << ">> Ingrese una opcion: ";
+                            cin >> elegir;
 
-                        }else {
-                            cout << "Opcion no valida" << endl;
+                            // Verificamos si la entrada fue válida (si fue otra opcion que no sea numero)
+                            if (cin.fail()) {
+                                throw invalid_argument("Opción no válida. Por favor ingrese un número.");
+                            }
+
+                            if (elegir == 1) {
+                                cout << ">> Ingrese ID de Activo a Devolver: ";
+                                cin >> ID_E;
+
+
+                            } else if (elegir == 2) {
+                                Menu_usuario(); // Regresar al menú
+                            } else {
+                                throw invalid_argument("Opción no válida. Por favor ingrese 1 o 2.");
+                            }
+
+                        } catch (const invalid_argument& e) {
+                            cout << e.what() << endl; // Muestra el mensaje de error
+                            cin.clear(); // Limpiar el error de entrada
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el resto de  la entrada
                         }
-                    }while(opcion2 != 2);
+
+                    } while (elegir != 2); // Termina cuando se selecciona regresar al menú
 
                     break;
                 }

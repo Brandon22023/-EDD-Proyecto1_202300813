@@ -1,7 +1,11 @@
 digraph G {
 	node [shape = circle];
-	n0[label="deik"];
+	n0[label="g"];
 	n0 -> n1;
-	n1[label="as"];
+	n1[label="adr"];
+	n0 -> n2;
+	n2[label="g"];
+	n2 -> n3;
+	n3[label="juan"];
 	
 }

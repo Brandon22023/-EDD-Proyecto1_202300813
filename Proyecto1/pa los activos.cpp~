@@ -95,7 +95,7 @@ public:
         }
     }
 
-    bool ListaUsuariosAVL::actualizarEstadoActivo(const string& ID, bool nuevoEstado) {
+    bool actualizarEstadoActivo(const string& ID, bool nuevoEstado) {
         NodoUsuario* usuarioActual = cabeza;
         while (usuarioActual != nullptr) {
             NodoActivo* activoActual = usuarioActual->cabezaActivos;
