@@ -8,7 +8,6 @@
 
 #include "AVL/AVL.h"
 
-#include "Lista Circular Doblemente enlazada.cpp"
 
 
 using namespace std;
@@ -111,6 +110,24 @@ public:
             usuarioActual = usuarioActual->siguiente;
         }
         return false;  // No se encontró el activo con el ID proporcionado
+    }
+    NodoActivo* buscarActivoPorID(const string& ID) {
+        NodoUsuario* usuarioActual = cabeza; // Comenzamos con el primer usuario
+
+        // Recorremos la lista de usuarios
+        while (usuarioActual != nullptr) {
+            NodoActivo* activoActual = usuarioActual->cabezaActivos; // Recorremos los activos del usuario
+
+            // Recorremos la lista de activos del usuario
+            while (activoActual != nullptr) {
+                if (activoActual->activo.getID() == ID) {  // Si el ID del activo coincide con el proporcionado
+                    return activoActual;  // Devolvemos el nodo que contiene el activo
+                }
+                activoActual = activoActual->siguiente;  // Avanzamos al siguiente activo
+            }
+            usuarioActual = usuarioActual->siguiente;  // Avanzamos al siguiente usuario
+        }
+        return nullptr;  // Si no se encuentra el activo con el ID, retornamos nullptr
     }
 
 };

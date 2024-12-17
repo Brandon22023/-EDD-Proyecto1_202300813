@@ -259,32 +259,26 @@ public:
         swap(a->fecha, b->fecha);
         swap(a->tiempoRentar, b->tiempoRentar);
     }
-    NodoTransaccion* buscarPorUsuario(string usuarioBuscado) {
-        if (cabeza == nullptr) return nullptr;
-        NodoTransaccion* actual = cabeza;
-        do {
-            if (actual->usuario == usuarioBuscado) {
-                return actual;
-            }
-            actual = actual->siguiente;
-        } while (actual != cabeza);
-        return nullptr;
-    }
-
-    // Método para obtener todos los IDs activos de un usuario
-    void obtenerIDsActivosPorUsuario(string usuarioBuscado, vector<string>& idsActivos) {
-        NodoTransaccion* transaccion = buscarPorUsuario(usuarioBuscado);
-        if (transaccion == nullptr) {
-            cout << "Usuario no encontrado." << endl;
+    // Mostrar los idActivo de las transacciones asociadas a un usuario
+    void mostrarActivosPorUsuario(string usuarioActual) {
+        if (cabeza == nullptr) {
+            cout << "No hay transacciones." << endl;
             return;
         }
 
-        // Iterar por todas las transacciones del usuario
-        NodoTransaccion* actual = transaccion;
+        NodoTransaccion* actual = cabeza;
+        bool encontrados = false;
         do {
-            idsActivos.push_back(actual->idActivo);
+            if (actual->usuario == usuarioActual) {
+                cout << "ID: " << actual->idActivo << endl;
+                encontrados = true;
+            }
             actual = actual->siguiente;
-        } while (actual != transaccion);
+        } while (actual != cabeza);
+
+        if (!encontrados) {
+            cout << "No se encontraron activos para el usuario " << usuarioActual << "." << endl;
+        }
     }
 };
 

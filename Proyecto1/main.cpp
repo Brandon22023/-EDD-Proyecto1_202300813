@@ -56,17 +56,10 @@ public:
 
                 }
 
-            } catch (const ios_base::failure& e) {
-                // Captura errores de flujo (entrada inválida)
-                cin.clear(); // Restablece el estado del flujo
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpia el buffer
-                cout << "Error: Entrada invalida. Por favor, ingrese un numero valido." << endl;
-            } catch (const out_of_range& e) {
-                // Captura errores cuando la opción está fuera del rango permitido
-                cout << "Error: " << e.what() << endl;
+            } catch (const exception &e) {
+                cout << "Ocurrió un error: " << e.what() << endl;
             } catch (...) {
-                // Captura cualquier otra excepción inesperada
-                cout << "Error desconocido. Intente de nuevo." << endl;
+                cout << "Ocurrió un error inesperado." << endl;
             }
         } while (true);
 
@@ -120,10 +113,10 @@ public:
                     throw runtime_error("Error: Los datos son erroneos.");
                 }
             }
-        } catch (const runtime_error& e) {
-            cerr << e.what() << endl;
-        } catch (const exception& e) {
-            cerr << "Error inesperado: " << e.what() << endl;
+        } catch (const exception &e) {
+            cout << "Ocurrió un error: " << e.what() << endl;
+        } catch (...) {
+            cout << "Ocurrió un error inesperado." << endl;
         }
     }
     void Menu_administrador() {
@@ -602,14 +595,13 @@ public:
                                 if (activoActual == nullptr) {
                                     cout << "El usuario " << usuarioActual->nombreUsuario << " no tiene activos." << endl;
                                 } else {
-                                    cout << "Activos de " << usuarioActual->nombreUsuario << ":" << endl;
                                     while (activoActual != nullptr) {
                                         // Verificar si el activo no está rentado
                                         if (!activoActual->activo.getRentar()) {
                                             // Mostrar los detalles de cada activo que no esté rentado
                                             cout << "ID: " << activoActual->activo.getID()
                                                  << ", Nombre: " << activoActual->activo.getNombreActivo()
-                                                 << ", Descripción: " << activoActual->activo.getDescripcion()
+                                                 << ", Descripcion: " << activoActual->activo.getDescripcion()
                                                  << ", Tiempo de Renta: " << activoActual->activo.getTiempoRentar() << " días"
                                                  << endl;
                                             ElementoAVL elemento1(activoActual->activo.getValor(), activoActual->activo.getNombreActivo(), activoActual->activo.getDescripcion(), activoActual->activo.getTiempoRentar(), activoActual->activo.getUser(), activoActual->activo.getID(), activoActual->activo.getRentar());
@@ -667,7 +659,7 @@ public:
                                                                       ID_NOSE, name,
                                                                       departamento_global, Empresa_global, Fecha_actual, diasRenta);
 
-                                listaTransacciones.mostrarTransacciones();
+
                             } else if (opcion_2 == 2) {
                                 Menu_usuario();
                             } else {
@@ -688,12 +680,77 @@ public:
                     int elegir;
                     string ID_E;
                     cout << "============================ Activos Rentados ============================" << endl;
-                    cout << "" << endl;
+
+                    // Redirigir cout para capturar la salida de mostrarActivosPorUsuario
+                    stringstream buffer;
+                    streambuf* oldCoutBuffer = cout.rdbuf(buffer.rdbuf()); // Redirigir cout
+
+                    // Llamar a la función que muestra los activos por usuario
+                    listaTransacciones.mostrarActivosPorUsuario(usuarioActual);
+
+                    // Restaurar cout a su estado original
+                    cout.rdbuf(oldCoutBuffer);
+
+                    // Leer la salida capturada del stringstream
+                    string linea;
+                    NodoUsuario* nodoUsuario = listaUsuarios.obtenerPrimero(); // Método que obtiene la cabeza de la lista
+
+                    // Recorremos la lista de usuarios
+                    while (nodoUsuario != nullptr) {
+                        NodoActivo* activo = nodoUsuario->cabezaActivos;
+                        NodoActivo* previo = nullptr;
+
+                        // Recorremos los activos del usuario
+                        while (activo != nullptr) {
+                            bool encontrado = false;
+
+                            // Reiniciar el stringstream para leer desde el inicio
+                            buffer.clear();
+                            buffer.seekg(0, ios::beg);
+
+                            // Leer línea por línea de la salida capturada
+                            while (getline(buffer, linea)) {
+                                if (linea.find("ID:") != string::npos) {
+                                    string idCapturado;
+                                    stringstream(linea.substr(4)) >> idCapturado;  // Capturamos el ID después de "ID:"
+
+                                    if (idCapturado == activo->activo.getID()) {
+                                        encontrado = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (encontrado) {
+                                // Si se encuentra el ID, buscar el activo en la lista usando el ID
+                                NodoActivo* activoEncontrado = listaUsuarios.buscarActivoPorID(activo->activo.getID());
+
+                                if (activoEncontrado != nullptr) {
+                                    // Imprimir la información del activo encontrado
+                                    cout << "Activo encontrado: " << endl;
+                                    cout << "ID: " << activoEncontrado->activo.getID() << endl;
+                                    cout << "Nombre: " << activoEncontrado->activo.getNombreActivo() << endl;
+                                    cout << "Descripcion: " << activoEncontrado->activo.getDescripcion() << endl;
+                                    cout << "Tiempo de renta: " << activoEncontrado->activo.getTiempoRentar() << " dias" << endl;
+                                    cout << "Usuario: " << activoEncontrado->activo.getUser() << endl;
+                                    cout << "Estado de renta: " << (activoEncontrado->activo.getRentar() ? "Rentado" : "Disponible") << endl;
+                                }
+                            }
+                            activo = activo->siguiente;
+
+
+                        }
+
+                        nodoUsuario = nodoUsuario->siguiente;
+                    }
+
+
+
                     cout << "" << endl;
 
                     do {
                         try {
-                            cout << ">> 1. Registrar Devolucon" << endl;
+                            cout << ">> 1. Registrar Devolucion" << endl;
                             cout << ">> 2. Regresar a Menu" << endl;
                             cout << ">> Ingrese una opcion: ";
                             cin >> elegir;
@@ -704,20 +761,25 @@ public:
                             }
 
                             if (elegir == 1) {
-                                cout << ">> Ingrese ID de Activo a Devolver: ";
+                                cout << ">> Ingrese ID de Activo a Devolver: "<<endl;
                                 cin >> ID_E;
-
-
+                                // Actualizar el estado del activo
+                                bool actualizado = listaUsuarios.actualizarEstadoActivo(ID_E, false);
+                                if (actualizado) {
+                                    cout << "El activo con ID " << ID_E << " fue devuelto exitosamente." << endl;
+                                } else {
+                                    cout << "No se pudo actualizar el estado del activo. Por favor, verifica el ID." << endl;
+                                }
                             } else if (elegir == 2) {
-                                Menu_usuario(); // Regresar al menú
+                                Menu_usuario();
                             } else {
                                 throw invalid_argument("Opción no válida. Por favor ingrese 1 o 2.");
                             }
 
-                        } catch (const invalid_argument& e) {
-                            cout << e.what() << endl; // Muestra el mensaje de error
-                            cin.clear(); // Limpiar el error de entrada
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el resto de  la entrada
+                        } catch (const exception &e) {
+                            cout << "Ocurrió un error: " << e.what() << endl;
+                        } catch (...) {
+                            cout << "Ocurrió un error inesperado." << endl;
                         }
 
                     } while (elegir != 2); // Termina cuando se selecciona regresar al menú
@@ -833,75 +895,12 @@ public:
         FechaActual = to_string(now->tm_mday) + '/' +
                       to_string(now->tm_mon + 1) + '/' +
                       to_string(now->tm_year + 1900);
-
         return FechaActual;
     }
 };
-
-
-
-
-
 int main() {
     Menus t_menus;
     t_menus.Menu_sesion();
-
-
-
-    //Matriz_Disperza *matriz = new Matriz_Disperza();
-    //matriz->insertarvalor("juan","kiche","contaduria");
-    //matriz->insertarvalor("Diego","Palin","arquitecto");
-    //matriz->insertarvalor(8, 1, 0);
-    //matriz->insertarvalor(10, 2, 1);
-    //matriz->insertarvalor(15, 1, 1);
-    //matriz->graficarMatrizDisperza();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*AVL*arbolAVL = new AVL();
-    arbolAVL->insertar(10);
-    arbolAVL->insertar(5);
-    arbolAVL->insertar(4);
-    arbolAVL->insertar(1);
-    arbolAVL->insertar(3);
-    arbolAVL->insertar(0);
-    arbolAVL->insertar(6);
-    arbolAVL->insertar(12);
-    arbolAVL->insertar(14);
-    arbolAVL->insertar(11);*/
-
-    /*arbolAVL->hakai(10);
-    arbolAVL->hakai(3);
-    arbolAVL->hakai(12);
-    arbolAVL->hakai(6);*/
-
-
-
-
-
-
-
-
-    //string path = "/Users/Marro/Documents/yon/VACACIONES DICIEMBRE 2024/LAB ESTRUCTURA DE DATOS/-EDD-Proyecto1_202300813/Proyecto1/";
-    //string path = "";
-
-
-
-
-
-    //cout << "probando cosas" << endl;
     return 0;
 }
 

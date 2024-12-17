@@ -1,0 +1,440 @@
+# Manual de Tecnico
+**UNIVERSIDAD DE SAN CARLOS DE GUATEMALA**  
+**FACULTAD DE INGENIERÍA**     
+**CATEDRÁTICO:** Ing. Edgar René Ornelis Hoíl
+**TUTOR  ACADÉMICO:** Elian Saúl Estrada Urbina  
+**Nombre:** Brandon Antonio Marroquín Pérez  
+**Carnet:** 202300813  
+**Fecha de Entrega:** 17 de diciembre de 2024  
+**Curso:** LABORATORIO ESTRUCTURAS DE DATOS Sección A
+**Semestre:** Quinto Semestre 2024 
+
+---
+## Introducción
+
+Este manual técnico presenta la implementación de un **Sistema de Renta de Activos** desarrollado en **C++**, aplicando estructuras de datos avanzadas como **matrices dispersas**, **árboles AVL** y **listas circulares doblemente enlazadas**. El sistema permite gestionar usuarios, activos y transacciones, integrando herramientas como **Graphviz** para generar reportes gráficos y validar la solución implementada.
+
+El proyecto demuestra la aplicación práctica de la memoria dinámica, punteros y estructuras de datos eficientes en **C++**, contribuyendo al desarrollo de habilidades en programación avanzada y resolución de problemas.
+
+---
+
+## Objetivos
+
+### Objetivo General
+- Desarrollar un sistema eficiente de gestión de activos aplicando estructuras de datos avanzadas en C++.
+---
+### Objetivos Específicos
+1. Implementar estructuras de datos como matrices dispersas, árboles AVL y listas circulares doblemente enlazadas para la gestión de usuarios, activos y transacciones.
+2. Generar reportes gráficos utilizando Graphviz para validar y visualizar las estructuras implementadas en el sistema.
+---
+## Alcance del Sistema
+
+El sistema de renta de activos permitirá lo siguiente:
+
+1. **Gestión de usuarios**: Creación, modificación y eliminación de usuarios a través de un usuario administrador.
+2. **Administración de activos**: Agregar, modificar, eliminar y rentar activos usando árboles AVL.
+3. **Gestión de transacciones**: Registro y organización de transacciones mediante una lista circular doblemente enlazada.
+4. **Reportes gráficos**: Generación de reportes utilizando Graphviz para visualizar el estado de la matriz dispersa, activos disponibles y transacciones realizadas.
+5. **Autenticación**: Inicio de sesión seguro para usuarios y administrador.
+
+El sistema se implementará en **C++**, con una interfaz de consola y un manejo eficiente de memoria dinámica, aplicando buenas prácticas de programación.
+
+---
+## Requisitos de Hardware
+Requisitos mínimos
+Procesador:
+Procesador de 64 bits compatible con x86 (Intel o AMD) que soporte virtualización (VT-x o AMD-V).
+Memoria RAM:
+4 GB (mínimo para ejecutar WSL y el compilador sin problemas).
+Almacenamiento:
+10-15 GB de espacio libre (para instalar WSL, Ubuntu, compiladores, bibliotecas y herramientas adicionales).
+Sistema Operativo:
+Windows 10 (versión 1903 o posterior) o Windows 11.
+GPU:
+No es necesario, a menos que se usen herramientas de visualización gráfica avanzada (no aplica si solo generas archivos de texto como reportes).
+
+---
+# Requisitos de Software para el Proyecto en C++ con WSL
+
+## 1. Sistema Operativo
+- **Windows 10 (versión 1903 o superior)** o **Windows 11**.
+
+## 2. Windows Subsystem for Linux (WSL)
+- **WSL2** es necesario para ejecutar un entorno Linux en Windows.
+    - Instalación de WSL2:
+      ```bash
+      wsl --install
+      ```
+
+    - Instalación de una distribución de Linux, por ejemplo, **Ubuntu**:
+      ```bash
+      wsl --install -d Ubuntu
+      ```
+
+## 3. Distribución de Linux
+- **Ubuntu 20.04 LTS** o **Ubuntu 22.04 LTS** recomendadas por su estabilidad y soporte a largo plazo.
+
+## 4. Compilador de C++ (G++)
+- **GCC (GNU Compiler Collection)** para compilar el código C++.
+    - Instalación:
+      ```bash
+      sudo apt update
+      sudo apt install g++
+      ```
+
+## 5. Editor o Entorno de Desarrollo (IDE)
+- **Visual Studio Code** con la extensión **Remote - WSL** para trabajar directamente en WSL desde Windows.
+    - Instalación de la extensión **Remote - WSL** en Visual Studio Code.
+
+- Alternativas:
+    - **CLion**: IDE para desarrollo C++.
+    - **Vim** o **Nano**: Editores de texto en la terminal.
+    - **Code::Blocks**: Puede ser configurado para trabajar con WSL.
+
+## 6. Herramienta de Generación de Gráficos
+- **Graphviz** para generar los reportes gráficos.
+    - Instalación:
+      ```bash
+      sudo apt install graphviz
+      ```
+
+## 7. Control de Versiones
+- **Git** para gestionar versiones del código fuente.
+    - Instalación:
+      ```bash
+      sudo apt install git
+      ```
+
+## 8. Herramientas de Desarrollo Adicionales
+- **Make**: Para la automatización de la compilación.
+    - Instalación:
+      ```bash
+      sudo apt install make
+      ```
+
+- **CMake** (opcional): Sí se desea un sistema de compilación más avanzado.
+    - Instalación:
+      ```bash
+      sudo apt install cmake
+      ```
+
+## 9. Depurador
+- **GDB (GNU Debugger)** para depurar el código C++.
+    - Instalación:
+      ```bash
+      sudo apt install gdb
+      ```
+
+## Extensiones Recomendadas para VS Code
+- **C/C++**: Proporciona autocompletado, depuración y resaltado de sintaxis.
+- **Graphviz Interactive Preview**: Para visualizar archivos `.dot` generados por Graphviz.
+
+
+---
+# Descripción de la Solución
+
+Como primero se crearon los menus para su buen manejo, luego se hizo la matriz para el registro y validacion de usuarios,
+después se hizo el arbol para el manejo de activos y transacciones, pero con complicaciones para el manejo de las transacciones, luego
+se empezo a hacer las acciones de todos los menus hasta donde se pudo debido a que no se pudo terminar lastimosamente.
+
+---
+
+# Logica del programa
+
+## Resumen de la Lógica del Código: 
+## Clase `Nodo`
+
+El código define una clase **Nodo** que representa un nodo de una **matriz dispersa**. Cada nodo tiene un valor de tipo **string** y punteros a otros nodos en varias direcciones.
+
+## Atributos
+- **valor**: Almacena el valor del nodo de tipo **string**.
+- **Punteros a otros nodos**:
+    - **siguiente**: Apunta al siguiente nodo en una lista (usualmente a la derecha).
+    - **previo**: Apunta al nodo anterior (usualmente a la izquierda).
+    - **arriba**: Apunta al nodo que está arriba (en la matriz).
+    - **abajo**: Apunta al nodo que está abajo (en la matriz).
+    - **adelante**: Apunta al nodo hacia adelante (posiblemente en una estructura 3D).
+    - **atras**: Apunta al nodo hacia atrás (otra dimensión extra en una estructura 3D).
+    - **contra**: Apunta a una dirección adicional (posiblemente otra dimensión en una estructura más compleja).
+
+## Métodos
+
+### Métodos `get`
+- **getValor()**: Retorna el valor almacenado en el nodo.
+- **getSiguiente()**, **getPrevio()**, **getArriba()**, **getAbajo()**, **getAtras()**, **getadelante()**, **getcontra()**: Retornan los punteros a los nodos en las respectivas direcciones (siguiente, previo, arriba, abajo, etc.).
+
+### Métodos `set`
+- **setValor()**: Establece el valor almacenado en el nodo.
+- **setSiguiente()**, **setPrevio()**, **setArriba()**, **setAbajo()**, **setAtras()**, **setadelante()**, **setcontra()**: Permiten asignar un nuevo nodo a cada puntero (para enlazar nodos en diferentes direcciones).
+
+## Constructor
+El **constructor** de la clase **Nodo** inicializa el valor del nodo con un valor pasado como parámetro y establece todos los punteros a `nullptr`. Esto significa que inicialmente el nodo no está conectado a otros nodos.
+
+## Propósito General
+La clase **Nodo** es parte de una estructura de datos más compleja, probablemente una **matriz dispersa**. Permite representar datos multidimensionales donde cada nodo puede apuntar a otros nodos en diferentes direcciones, lo que facilita la navegación a través de los datos.
+
+# Clase `NodoAVL`
+
+El código define una clase **NodoAVL**, que representa un nodo dentro de un **Árbol AVL**. Esta estructura de datos es una versión balanceada de un árbol binario de búsqueda, donde se mantiene un factor de equilibrio para asegurar que la altura de los subárboles izquierdo y derecho difiera como máximo en 1.
+
+## Atributos
+- **elemento**: Almacena el valor del nodo, que es un objeto de la clase **ElementoAVL**. Este objeto contiene los datos específicos que el nodo va a almacenar.
+- **factorEquilibrio**: Un entero que indica el balance del nodo, calculado como la diferencia de alturas entre el subárbol izquierdo y el subárbol derecho.
+- **izquierda**: Puntero al nodo hijo izquierdo en el árbol.
+- **derecha**: Puntero al nodo hijo derecho en el árbol.
+
+## Métodos
+
+### Métodos `get`
+- **getElemento()**: Retorna el objeto **ElementoAVL** almacenado en el nodo.
+- **getFactorEquilibrio()**: Retorna el factor de equilibrio del nodo (diferencia de alturas entre subárboles izquierdo y derecho).
+- **getIzquierda()**: Retorna el puntero al nodo hijo izquierdo.
+- **getDerecha()**: Retorna el puntero al nodo hijo derecho.
+
+### Métodos `set`
+- **setElemento()**: Establece el objeto **ElementoAVL** que será almacenado en el nodo.
+- **setFactorEquilibrio()**: Establece el valor del factor de equilibrio del nodo.
+- **setIzquierda()**: Establece el puntero al nodo hijo izquierdo.
+- **setDerecha()**: Establece el puntero al nodo hijo derecho.
+
+## Constructor
+- El **constructor** de la clase **NodoAVL** inicializa el nodo con un objeto de tipo **ElementoAVL** y establece el factor de equilibrio a un valor por defecto (usualmente 0). Los punteros **izquierda** y **derecha** se inicializan a `nullptr`.
+
+# Clase `ElementoAVL`
+
+El código define una clase **ElementoAVL** que representa los elementos que serán almacenados dentro de un **Árbol AVL**. Esta clase encapsula los atributos de un activo para renta y sus características relacionadas.
+
+## Atributos
+- **valor**: Un número entero que representa el valor del activo (de tipo `long long`).
+- **nombreActivo**: El nombre del activo, de tipo **string**.
+- **descripcion**: Descripción adicional del activo, de tipo **string**.
+- **tiempoRentar**: El tiempo durante el cual el activo está siendo rentado (en días), de tipo **int**.
+- **user**: El nombre del usuario que está rentando el activo, de tipo **string**.
+- **ID**: Un identificador único del activo, de tipo **string**.
+- **rentar**: Un valor booleano que indica si el activo está actualmente rentado (inicializado como `false`).
+
+## Métodos
+
+### Getters
+- **getValor()**: Retorna el valor del activo.
+- **getDescripcion()**: Retorna la descripción del activo.
+- **getNombreActivo()**: Retorna el nombre del activo.
+- **getTiempoRentar()**: Retorna el tiempo de renta del activo.
+- **getUser()**: Retorna el usuario que está rentando el activo.
+- **getID()**: Retorna el ID del activo.
+- **getRentar()**: Retorna el estado de si el activo está rentado.
+
+### Setters
+- **setValor()**: Establece el valor del activo.
+- **setNombreActivo()**: Establece el nombre del activo.
+- **setDescripcion()**: Establece la descripción del activo.
+- **setTiempoRentar()**: Establece el tiempo de renta del activo.
+- **setUser()**: Establece el usuario que está rentando el activo.
+- **setID()**: Establece el ID del activo.
+- **setRentar()**: Establece el estado de si el activo está rentado o no.
+
+## Constructor
+El **constructor** de la clase **ElementoAVL** inicializa todos los atributos del objeto, permitiendo asignar valores personalizados al crear un nuevo activo. Los valores de los atributos pueden ser opcionales, con valores predeterminados para aquellos que no se especifiquen (por ejemplo, `rentar` está por defecto en `false`).
+
+# Clase `AVL`
+
+La clase **AVL** implementa un **Árbol AVL**, que es una estructura de datos de árbol binario de búsqueda auto-balanceado. Los nodos del árbol están balanceados para garantizar que la diferencia de alturas entre los subárboles izquierdo y derecho de cualquier nodo no sea mayor a 1.
+
+## Atributos
+- **raiz**: Puntero al nodo raíz del árbol AVL.
+
+## Métodos Privados
+
+- **insertar()**: Inserta un nuevo nodo con un valor en el árbol, asegurando el equilibrio después de la inserción.
+- **hakai()**: Elimina un nodo con un valor específico del árbol.
+- **alturaMaxima()**: Calcula la altura máxima de un nodo.
+- **factorDeEquilibrio()**: Calcula el factor de equilibrio de un nodo, que es la diferencia entre la altura del subárbol izquierdo y derecho.
+- **rotacionDerecha()**: Realiza una rotación a la derecha en un nodo para mantener el equilibrio.
+- **rotacionIzquierda()**: Realiza una rotación a la izquierda en un nodo para mantener el equilibrio.
+- **rotacionDerechaIzquierda()**: Realiza una rotación doble (derecha-izquierda) para balancear el árbol.
+- **rotacionIzquierdaDerecha()**: Realiza una rotación doble (izquierda-derecha) para balancear el árbol.
+- **andateDerecha()**: Método auxiliar que realiza una rotación derecha.
+- **buscarYModificarDescripcion()**: Busca un nodo por su **ID** y modifica su descripción.
+- **buscarporID()**: Busca un nodo específico en el árbol por su **ID**.
+- **imprimir()**: Genera una representación en cadena del árbol AVL en formato estructurado.
+
+## Métodos Públicos
+
+### Getters
+- **getRaiz()**: Retorna la raíz del árbol.
+
+### Setters
+- **setRaiz()**: Establece la raíz del árbol.
+
+### Otros Métodos
+- **esHoja()**: Verifica si un nodo es una hoja (no tiene hijos).
+- **insertar()**: Inserta un **ElementoAVL** en el árbol, manteniendo el equilibrio del árbol.
+- **hakai()**: Elimina un nodo con el valor proporcionado del árbol.
+- **recorrerInorden()**: Recorre el árbol en orden y muestra los nodos.
+- **buscarYModificarDescripcion()**: Busca un nodo por su **ID** y modifica su descripción.
+- **buscarporID()**: Busca un nodo por su **ID** en el árbol.
+- **imprimir()**: Genera una representación en cadena del árbol AVL.
+
+## Constructor
+- El **constructor** inicializa el árbol AVL, estableciendo la raíz en **nullptr**.
+
+# Clase `AVL`
+
+La clase **AVL** implementa un **Árbol AVL** (Árbol Binario de Búsqueda Autobalanceado), donde cada nodo se equilibra automáticamente durante las inserciones y eliminaciones para garantizar una búsqueda eficiente.
+
+## Atributos
+- **raiz**: Puntero al nodo raíz del árbol.
+
+## Métodos Privados
+- **insertar()**: Inserta un nodo en el árbol de manera recursiva y realiza las rotaciones necesarias para mantener el equilibrio.
+- **hakai()**: Elimina un nodo con un valor específico del árbol, con manejo de varios casos de eliminación (hoja, nodo con un hijo, nodo con dos hijos).
+- **rotacionDerecha()**, **rotacionIzquierda()**, **rotacionDerechaIzquierda()**, **rotacionIzquierdaDerecha()**: Métodos de rotación para mantener el equilibrio del árbol durante las inserciones y eliminaciones.
+- **andateDerecha()**: Método auxiliar que encuentra el nodo más a la derecha en el subárbol izquierdo para la eliminación de un nodo.
+- **alturaMaxima()**: Calcula la altura máxima de un subárbol.
+- **factorDeEquilibrio()**: Calcula el factor de equilibrio de un nodo, que es la diferencia entre las alturas del subárbol derecho e izquierdo.
+- **esHoja()**: Verifica si un nodo es una hoja (sin hijos).
+- **imprimir()**: Genera una representación en formato **dot** de la estructura del árbol, útil para la visualización.
+
+## Métodos Públicos
+### Getters
+- **getRaiz()**: Retorna la raíz del árbol.
+
+### Setters
+- **setRaiz()**: Establece la raíz del árbol.
+
+### Otros Métodos
+- **insertar()**: Inserta un **ElementoAVL** en el árbol, manteniendo el equilibrio.
+- **hakai()**: Elimina un nodo con un valor específico.
+- **recorrerInorden()**: Recorre el árbol en orden (inorden), mostrando los datos de cada nodo.
+- **buscarYModificarDescripcion()**: Busca un nodo por su ID y modifica su descripción.
+- **buscarporID()**: Busca un nodo por su ID en el árbol.
+- **imprimir()**: Retorna una representación en formato **dot** del árbol, para visualización con herramientas como Graphviz.
+
+## Constructor
+- El **constructor** inicializa el árbol AVL, estableciendo la raíz a **nullptr**.
+
+# Clase `ListaCircularDoble`
+
+La clase **ListaCircularDoble** implementa una **lista circular doblemente enlazada** que gestiona las transacciones de renta de activos. La lista permite agregar, eliminar, mostrar y ordenar transacciones, así como generar un gráfico con los datos de las transacciones.
+
+## Atributos
+- **cabeza**: Puntero al primer nodo de la lista circular, que también es el último debido a la naturaleza circular.
+
+## Métodos
+
+### Métodos de Gestión de Transacciones
+- **agregarTransaccion()**: Inserta una nueva transacción al final de la lista circular. Si la lista está vacía, el nuevo nodo será tanto la cabeza como el último nodo.
+- **eliminarTransaccion()**: Elimina una transacción por su ID. Maneja diferentes casos (eliminación de la cabeza, eliminación de un nodo intermedio, etc.).
+- **mostrarTransacciones()**: Muestra todos los detalles de las transacciones presentes en la lista circular.
+
+### Métodos de Ordenamiento
+- **ordenarAscendente()**: Ordena las transacciones de manera ascendente según su **ID** usando un algoritmo de ordenación de burbuja.
+- **ordenarDescendente()**: Ordena las transacciones de manera descendente según su **ID** utilizando el mismo algoritmo.
+
+### Métodos de Gráficos
+- **graficarTransacciones()**: Genera un archivo **.dot** con la representación gráfica de las transacciones usando Graphviz y lo convierte a un archivo **.svg** para visualizarlo. Abre el archivo SVG en el navegador predeterminado.
+
+### Métodos de Búsqueda y Filtro
+- **mostrarActivosPorUsuario()**: Muestra todos los **ID** de los activos que han sido rentados por un usuario específico. Si no se encuentran transacciones para ese usuario, muestra un mensaje adecuado.
+
+### Métodos Auxiliares
+- **swapNodos()**: Método auxiliar que intercambia los datos de dos nodos en la lista (usado durante la ordenación).
+
+## Constructor
+- El **constructor** inicializa la lista como vacía, con **cabeza** establecida a `nullptr`.
+
+
+#  Clase `Matriz_Disperza`
+
+La clase **Matriz_Disperza** implementa una **matriz dispersa** utilizando una estructura de nodos enlazados tanto horizontal como verticalmente. La matriz se organiza por **cabeceras horizontales** (representando departamentos) y **cabeceras verticales** (representando empresas), permitiendo un acceso eficiente a los nodos que contienen la información de los usuarios.
+
+## Atributos
+- **cabeceraHo**: Puntero a la primera cabecera horizontal (departamento).
+- **cabecerave**: Puntero a la primera cabecera vertical (empresa).
+
+## Métodos
+
+### Métodos de Inserción
+- **insertarvalor()**: Inserta un nuevo valor (usuario) en la matriz dispersa. Verifica si las cabeceras horizontales y verticales ya existen, y si no, las crea e inserta el valor en el lugar adecuado.
+- **insertarALfinal()**: Inserta el valor en el final de las cabeceras horizontal y vertical.
+- **insertarCabeceraHorizontal()**: Inserta una nueva cabecera horizontal si no existe.
+- **insertarCabeceraVertical()**: Inserta una nueva cabecera vertical si no existe.
+- **insertarAlFinalHorizontal()**: Inserta un nodo al final de la fila (horizontal).
+- **insertarAlFinalVertical()**: Inserta un nodo al final de la columna (vertical).
+- **insertarAlMedioHorizontal()**: Inserta un nodo en el medio de una fila horizontal.
+- **insertarAlMedioVertical()**: Inserta un nodo en el medio de una columna vertical.
+
+### Métodos de Búsqueda
+- **cabecerahorizontal()**: Busca una cabecera horizontal por su valor.
+- **cabeceravertical()**: Busca una cabecera vertical por su valor.
+- **enCabeceraHorizontal()**: Encuentra la cabecera horizontal a la que pertenece un nodo.
+- **enCabeceraVertical()**: Encuentra la cabecera vertical a la que pertenece un nodo.
+- **buscarUsuario()**: Busca un usuario en la matriz dispersa según su nombre, departamento y empresa.
+- **buscarUsuarioEnMatriz()**: Busca un usuario específico en la matriz.
+
+### Métodos Auxiliares
+- **masderecha()**: Verifica si una cabecera horizontal está más a la derecha que otra.
+- **masabajo()**: Verifica si una cabecera vertical está más abajo que otra.
+- **estavacia()**: Verifica si la matriz está vacía.
+
+### Métodos de Visualización
+- **graficarMatrizDisperza()**: Genera un archivo **.dot** que representa gráficamente la estructura de la matriz dispersa y lo convierte en un archivo **.svg** usando **Graphviz**.
+
+## Constructor
+- El **constructor** inicializa las cabeceras horizontal y vertical a **nullptr**, indicando que la matriz está vacía.
+
+# `ListaUsuariosAVL`
+
+La clase **`ListaUsuariosAVL`** gestiona una lista de usuarios, donde cada usuario tiene asociados varios activos. Los activos son gestionados como nodos en una lista enlazada dentro de cada usuario.
+
+## Atributos
+- **cabeza**: Puntero al primer nodo de la lista de usuarios. Cada nodo de usuario contiene información sobre los activos de ese usuario.
+
+## Métodos
+
+### Métodos de Gestión de Usuarios
+- **obtenerPrimero()**: Retorna el primer nodo de la lista de usuarios.
+- **buscarUsuario()**: Busca un usuario por su nombre.
+- **buscarUsuarioPorID()**: Busca un usuario a partir del ID de uno de sus activos.
+- **agregarUsuario()**: Agrega un nuevo usuario a la lista si no existe.
+
+### Métodos de Gestión de Activos
+- **agregarActivo()**: Agrega un nuevo activo a la lista de activos de un usuario. Si el usuario no existe, se crea uno nuevo.
+- **actualizarEstadoActivo()**: Actualiza el estado de un activo (si está o no rentado) dado su **ID**.
+- **buscarActivoPorID()**: Busca un activo por su **ID** dentro de todos los usuarios.
+
+## Clases Internas
+
+### Clase `NodoActivo`
+- Representa un nodo que contiene un activo y un puntero al siguiente nodo en la lista de activos de un usuario.
+    - **activo**: El objeto **`ElementoAVL`** que contiene la información del activo.
+    - **siguiente**: Puntero al siguiente nodo de activos.
+
+### Clase `NodoUsuario`
+- Representa un nodo que contiene un usuario y su lista de activos.
+    - **nombreUsuario**: Nombre del usuario.
+    - **cabezaActivos**: Puntero al primer nodo de la lista de activos de este usuario.
+    - **siguiente**: Puntero al siguiente nodo de usuarios.
+
+---
+
+#  Archivo `main`
+
+Este programa está diseñado para gestionar activos y usuarios de una empresa. La lógica se organiza en diferentes menús y funcionalidades que permiten a los usuarios realizar diversas acciones. A continuación, se describe la estructura y flujo lógico del sistema.
+
+## 1. **Inicio del Programa**
+
+El programa comienza en la función principal (`main`), donde se crea una instancia del objeto `Menus`. Luego, se llama al método `Menu_sesion()` para permitir al usuario iniciar sesión en el sistema.
+
+### Flujo:
+1. Al ejecutar el programa, se inicializa la clase `Menus`, que contiene todas las funciones de menú.
+2. La primera interacción del usuario es con el **menú de sesión** (`Menu_sesion`), donde se le solicita ingresar su nombre de usuario y contraseña.
+
+```cpp
+int main() {
+    Menus t_menus;
+    t_menus.Menu_sesion();  // Se llama a la función de inicio de sesión
+    return 0;
+}
+
+
